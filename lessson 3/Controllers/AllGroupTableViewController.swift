@@ -25,6 +25,7 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.rowHeight = 60
  
     }
     

@@ -89,7 +89,7 @@ class SwipeVC: UIViewController {
         
         let translation = recognizer.translation(in: panView)
         let percent = translation.y / panView.bounds.height
-        var myDirection = self.image.frame.size.width
+       // var myDirection = image.frame.size.width
 
     
         switch recognizer.state {
@@ -99,14 +99,14 @@ class SwipeVC: UIViewController {
            // let translation = recognizer.translation(in: self.view)
             if translation.x > 0 {
                 myPanWay = .LeftToRight
-                myDirection =  self.image.frame.width
+           //     myDirection =  self.image.frame.width
             } else if translation.x < 0 {
                 myPanWay = .RightToLeft
-                myDirection = (0 - self.image.frame.size.width)
+        //        myDirection = (0 - self.image.frame.size.width)
             }
             if translation.y > 0 {
                 myPanWay = .TopToBottom
-                myDirection =  self.view.frame.size.width
+         //       myDirection =  self.view.frame.size.width
             }
             //image.frame = image.frame.offsetBy(dx: 0, dy: 0)
            
