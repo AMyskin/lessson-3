@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ServiceNetwork {
     
@@ -138,7 +139,7 @@ class ServiceNetwork {
     }
     
     
-    func getMyGroups(){
+    func getMyGroups(group: String, _ callback: @escaping ( ([Group]) -> Void)){
         print(#function)
             let queryArray: [URLQueryItem] = [
                 URLQueryItem(name: "v", value: "5.52"),
@@ -146,11 +147,15 @@ class ServiceNetwork {
                 URLQueryItem(name: "access_token", value: session.token)
             ]
          getVkMetod(path: "/method/groups.get", queryItem: queryArray){jsonData in
+            
+            guard let myGroup = self.parseGroupJSON(withDate: jsonData) else {return}
+            callback(myGroup)
+                       
+    
              
+             //let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
              
-              let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
-             
-              print(json ?? "no json")
+             // print(json ?? "no json")
            
              
          }
@@ -160,6 +165,15 @@ class ServiceNetwork {
            
            
        }
+    
+    func getMyGroupsAlamofire(){
+        
+        let urlPath = "https://api.vk.com/method/groups.get?v=5.52&extended=1&access_token=b42ca51ccd59af0b509edce97b8ec5565327aed71f420ea239cd8340e0f31e276c8289f331a817622453f"
+        AF.request(urlPath).responseJSON{ (responce) in
+            print(responce.value ?? "no json")
+            
+        }
+    }
     
    
     func searchGroups( q: String, quantity: Int){
@@ -185,7 +199,43 @@ class ServiceNetwork {
        }
     
     
-    
+    func parseGroupJSON(withDate data: Data) -> [Group]?{
+         
+        var tmpGroups: [Group] = []
+         let json = try? JSONSerialization.jsonObject(with: data, options: [])
+             if let dictionary = json as? [String: Any] {
+
+                 if let response = dictionary["response"] as? NSDictionary {
+
+                     if let items = response["items"] as? NSArray {
+                         for item in items {
+                             
+                             let testUser = item as! NSDictionary
+                             
+                            guard  let name = testUser["name"] as? String,
+                                let screenName = testUser["screen_name"] as? String,
+                                let photo50 = testUser["photo_50"] as? String
+  
+                                else {return nil}
+                            
+                            
+                            
+                            let tmpGroup: Group = Group(name: name, image: UIImage(named: "1")!, imageUrl: photo50)
+                             print ("\(name) \(screenName)")
+                            
+                            tmpGroups.append(tmpGroup)
+                 
+                         }
+                         
+                     }
+                 }
+             }
+         
+          
+             
+          return tmpGroups
+     
+     }
     
     
     

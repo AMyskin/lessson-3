@@ -7,6 +7,7 @@
 //
 import UIKit
 
+
 struct Group: Equatable {
     static func == (lhs: Group, rhs: Group) -> Bool {
         return lhs.name == rhs.name &&
@@ -15,6 +16,7 @@ struct Group: Equatable {
     
     let name: String
     let image: UIImage
+    var imageUrl: String? 
     
    
     

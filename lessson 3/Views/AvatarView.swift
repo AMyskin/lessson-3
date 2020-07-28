@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 //protocol AvatarViewDelegate: class {
 //
@@ -23,6 +24,17 @@ import UIKit
             imageView.image = avatarImage
             //imageButton.setImage(avatarImage, for: .normal )
 
+        }
+    }
+    
+    var imageURL: String? {
+        didSet{
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                imageView.kf.setImage(with: url)
+            } else {
+                imageView.image = nil
+                imageView.kf.cancelDownloadTask()
+            }
         }
     }
     

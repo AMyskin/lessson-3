@@ -21,10 +21,28 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
         super.viewDidLoad()
         self.tableView.rowHeight = 60
         
-        service.getMyGroups()
+ 
+   
         
+         
+      //  service.getMyGroupsAlamofire()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+         service.getMyGroups(group: "test", {(group) in
+                    self.myGroupList = group
+            DispatchQueue.main.async { // Correct
+                     self.tableView.reloadData()
+                 }
+         
+            print(self.myGroupList.count)
+                })
+                    
+        
+    }
+    
+  
     
     @IBAction func addGroup(segue: UIStoryboardSegue) {
          guard
@@ -54,7 +72,8 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GroupCell
 
         cell.name.text = myGroupList[indexPath.row].name
-        cell.avatarView.avatarImage = myGroupList[indexPath.row].image
+       // cell.avatarView.avatarImage = myGroupList[indexPath.row].image
+        cell.avatarView.imageURL = myGroupList[indexPath.row].imageUrl
         cell.delegate = self
         
         return cell
