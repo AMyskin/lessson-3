@@ -50,10 +50,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         urlComponents.host = "oauth.vk.com"
         urlComponents.path = "/authorize"
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "7550035"),
+            URLQueryItem(name: "client_id", value: "7550671"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "262150"),
+            URLQueryItem(name: "scope", value: "wall,friends,photos,video,offline"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]
@@ -166,9 +166,21 @@ extension LoginViewController: WKNavigationDelegate {
         session.token = token
         session.userId = userId
         
+        passData()
         
+        //navigationController
         
         
         decisionHandler(.cancel)
     }
+    
+    
+    func passData() {
+          let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let secondViewController = storyboard.instantiateViewController(identifier: "navigationController")
+       secondViewController.modalPresentationStyle = .fullScreen
+       //navigationController?.pushViewController(secondViewController, animated: true)
+       self.present(secondViewController, animated: false, completion: nil)
+          //show(secondViewController, sender: nil)
+      }
 }

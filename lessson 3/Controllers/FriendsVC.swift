@@ -10,13 +10,11 @@ import UIKit
 
 class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CharDelegate, CustomSearchViewDelegate {
 
-    
 
-    
   
     @IBOutlet weak var customSearchBar: CustomSearchView!
     
-    
+    lazy var service = ServiceNetwork()
     let searchController = UISearchController(searchResultsController: nil)
     var filteredUsers: [User]  = []
     var filteredUsersWithSection : [Array<User>] = []
@@ -61,23 +59,19 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
 //             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //             return storyboard.instantiateViewController(withIdentifier: "FriendsVC") as? FriendsVC
 //         }
-    let session = Session.instance
-    
-    
-    
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 44
         
-        getFriends()
+        
+        service.getFriends()
+        service.getFriendsPhoto()
+        
+        
        // getFriendsPhoto()
-        
-        
    
-        print("FriendsVC session Token = \(session.token)\nid=\(session.userId)")
-        
      
         //customSearchBar.delegate = self
         charPicker.delegate = self
@@ -101,74 +95,11 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         setupTableView()
     }
     
-    //https://api.vk.com/method/photos.getAll?v=5.52&access_token=b88601f18930b149e676dacfa32b44f5552c929841d4030ad73362e012c741caa5b9bda6fc5b38fde8314
-       func getFriendsPhoto(){
-           let urlString =  "https://api.vk.com/method/photos.getAll?v=5.52&access_token=\(session.token)&count=100"
-           guard let url = URL(string: urlString) else {return}
-           let session = URLSession(configuration: .default)
-           let task = session.dataTask(with: url) { data , responce , eror in
-               if let data = data{
-                   
-                   let dataString =  String(data: data, encoding: .utf8)
-                  // let user = self.parseJSON(withDate: data)
-                
-                print("getFriendsPhoto")
     
-                   print(dataString)
-                   
-               }
-               if let eror = eror {
-             
-                   print("Ошибка загрузки данных!!! \n \(eror)")
-               }
-           }
-           task.resume()
-           
-       }
     
-    func getFriends(){
-        let urlString =  "https://api.vk.com/method/friends.get?v=5.52&access_token=\(session.token)&fields=photo_50"
-        guard let url = URL(string: urlString) else {return}
-        let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: url) { data , responce , eror in
-            if let data = data{
-                
-                //let dataString =  String(data: data, encoding: .utf8)
-                _ = self.parseUserJSON(withDate: data)
- 
-               // print(dataString)
-                
-            }
-            if let eror = eror {
-          
-                print("Ошибка загрузки данных!!! \n \(eror)")
-            }
-        }
-        task.resume()
-        
-    }
+   
     
-func parseUserJSON(withDate data: Data){
-    
-    let json = try? JSONSerialization.jsonObject(with: data, options: [])
-    if let dictionary = json as? [String: Any] {
 
-        if let nestedDictionary = dictionary["response"] as? NSDictionary {
-            // access nested dictionary values by key
-            if let items = nestedDictionary["items"] as? NSArray {
-                for item in items {
-                    
-                    let testUser = item as! NSDictionary
-                    guard  let userFirstName = testUser["first_name"],
-                            let userLastName = testUser["last_name"]else {return}
-                    print ("\(userFirstName) \(userLastName)")
-                }
-                
-            }
-        }
-    }
- 
-}
     
     private func setupTableView() {
         tableView.register(UINib(nibName: "FreindsCell", bundle: nil), forCellReuseIdentifier: "Cell")
@@ -216,20 +147,7 @@ func parseUserJSON(withDate data: Data){
     }
     
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//
-//
-//
-//        if isFiltering {
-//            let char = filteredChars[section]
-//            return char
-//        }else {
-//            let char = chars[section]
-//            return char
-//        }
-//
-//
-//    }
+
     
   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -294,12 +212,7 @@ func parseUserJSON(withDate data: Data){
     }
     
     
-    
-//    func scrollToValue(section : Int) {
-//        let scrollPosition: Int = 0
-//        let indexPath = IndexPath(row: scrollPosition, section: section)
-//        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-//    }
+
     
     func letterPicked(_ letter: String) {
         guard let section = filteredChars.firstIndex(of: letter) else { return }
@@ -309,21 +222,7 @@ func parseUserJSON(withDate data: Data){
     }
     
     
-//    func buttonTapped(cell: FreindsCell, button: UIButton) {
-//        //guard let indexPath = self.tableView.indexPath(for: cell) else {return}
-//              //print("buttonTapped")
-//             
-//                       let pulse = CASpringAnimation(keyPath: "transform.scale")
-//                       pulse.duration = 0.6
-//                       pulse.fromValue = 0.8
-//                       pulse.toValue = 1
-//                       pulse.initialVelocity = 0.5
-//                       pulse.damping = 1
-//                       
-//                       button.layer.add(pulse, forKey: nil)
-//              
-//           
-//    }
+
     
     func CustomSearch(chars: String) {
         

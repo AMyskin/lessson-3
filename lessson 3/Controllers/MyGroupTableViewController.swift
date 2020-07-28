@@ -10,12 +10,10 @@ import UIKit
 
 class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
-    let session = Session.instance
+
     
     
-    //https://api.vk.com/method/groups.get?v=5.52&access_token=b88601f18930b149e676dacfa32b44f5552c929841d4030ad73362e012c741caa5b9bda6fc5b38fde8314&extended=1
-    
-    //https://api.vk.com/method/groups.search?v=5.52&access_token=b88601f18930b149e676dacfa32b44f5552c929841d4030ad73362e012c741caa5b9bda6fc5b38fde8314&q=music&count=50
+    lazy var service = ServiceNetwork()
     
     var myGroupList: [Group] = []
 
@@ -23,8 +21,8 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
         super.viewDidLoad()
         self.tableView.rowHeight = 60
         
-        getMyGroups()
-        searchGroups( q: "music", quantity: 50)
+        service.getMyGroups()
+        service.searchGroups( q: "music", quantity: 50)
 
     }
     
@@ -85,77 +83,7 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
            
     }
     
-       func getMyGroups(){
-           let urlString =  "https://api.vk.com/method/groups.get?v=5.52&access_token=\(session.token)&extended=1"
-           guard let url = URL(string: urlString) else {return}
-           let session = URLSession(configuration: .default)
-           let task = session.dataTask(with: url) { data , responce , eror in
-               if let data = data{
-                   
-                   //let dataString =  String(data: data, encoding: .utf8)
-                 _ = self.parseGroupJSON(withDate: data)
-    
-                  // print(dataString)
-                   
-               }
-               if let eror = eror {
-             
-                   print("Ошибка загрузки данных!!! \n \(eror)")
-               }
-           }
-           task.resume()
-           
-       }
-    
-    func parseGroupJSON(withDate data: Data){
-        
-        let json = try? JSONSerialization.jsonObject(with: data, options: [])
-        if let dictionary = json as? [String: Any] {
-
-            if let nestedDictionary = dictionary["response"] as? NSDictionary {
-                // access nested dictionary values by key
-                if let items = nestedDictionary["items"] as? NSArray {
-                    for item in items {
-                        
-                        let testUser = item as! NSDictionary
-                        guard  let name = testUser["name"],
-                                let screenName = testUser["screen_name"]else {return}
-                        print ("\(name) \(screenName)")
-                    }
-                    
-                }
-            }
-        }
-        
-        print ("\n")
-        print ("-----------------------------------------------------")
-        print ("\n")
-     
-    }
-    
-    func searchGroups( q: String, quantity: Int){
-           let urlString =  "https://api.vk.com/method/groups.search?v=5.52&access_token=\(session.token)&q=\(q)&count=\(quantity)"
-           guard let url = URL(string: urlString) else {return}
-           let session = URLSession(configuration: .default)
-           let task = session.dataTask(with: url) { data , responce , eror in
-               if let data = data{
-                
-                _ = self.parseGroupJSON(withDate: data)
-                   
-                   //let dataString =  String(data: data, encoding: .utf8)
-                  // let user = self.parseJSON(withDate: data)
-    
-                   //print(dataString)
-                   
-               }
-               if let eror = eror {
-             
-                   print("Ошибка загрузки данных!!! \n \(eror)")
-               }
-           }
-           task.resume()
-           
-       }
+       
 
     
 

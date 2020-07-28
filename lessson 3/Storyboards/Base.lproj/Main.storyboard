@@ -78,9 +78,8 @@
                                             <constraint firstItem="V7c-aR-WR7" firstAttribute="top" secondItem="HST-re-Wia" secondAttribute="top" constant="20" id="obi-h4-fUP"/>
                                         </constraints>
                                     </view>
-                                    <wkWebView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vji-4e-w7G">
-                                        <rect key="frame" x="8" y="343" width="406" height="467"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vji-4e-w7G">
+                                        <rect key="frame" x="0.0" y="343" width="414" height="475"/>
                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <wkWebViewConfiguration key="configuration">
                                             <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -91,8 +90,12 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
+                                    <constraint firstItem="Vji-4e-w7G" firstAttribute="leading" secondItem="B7l-xL-n9E" secondAttribute="leading" id="0z1-Hf-LOb"/>
                                     <constraint firstItem="HST-re-Wia" firstAttribute="leading" secondItem="R0b-cZ-cNN" secondAttribute="leading" id="FHH-p4-x7n"/>
                                     <constraint firstAttribute="bottom" secondItem="HST-re-Wia" secondAttribute="bottom" id="IQy-V1-p7v"/>
+                                    <constraint firstItem="Vji-4e-w7G" firstAttribute="top" secondItem="IC3-dd-s93" secondAttribute="bottom" constant="16.333333333333314" id="lUt-UQ-bro"/>
+                                    <constraint firstItem="B7l-xL-n9E" firstAttribute="trailing" secondItem="Vji-4e-w7G" secondAttribute="trailing" id="q1A-8e-C5K"/>
+                                    <constraint firstItem="B7l-xL-n9E" firstAttribute="bottom" secondItem="Vji-4e-w7G" secondAttribute="bottom" id="rvA-5Q-kNq"/>
                                     <constraint firstAttribute="trailing" secondItem="HST-re-Wia" secondAttribute="trailing" id="zJd-tQ-np7"/>
                                     <constraint firstItem="HST-re-Wia" firstAttribute="top" secondItem="R0b-cZ-cNN" secondAttribute="top" id="ziE-6J-DHo"/>
                                 </constraints>

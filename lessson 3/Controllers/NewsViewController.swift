@@ -10,6 +10,8 @@ import UIKit
 
 final class NewsViewController: UITableViewController {
     
+    lazy var service = ServiceNetwork()
+    
     var news: [NewsOfUser] = []
     
     lazy var dateFormatter: DateFormatter = {
@@ -23,6 +25,8 @@ final class NewsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         news = (1...5).map { _ in NewsOfUser.randomOne }
+        //service.getUserWall()
+        service.getUserNewsFeed()
     }
     
     // MARK: - Navigation
