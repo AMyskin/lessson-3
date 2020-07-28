@@ -53,12 +53,15 @@ class ServiceNetwork {
             URLQueryItem(name: "fields", value: "photo_50"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
-        getVkMetod(path: "/method/friends.get", queryItem: queryArray){jsonData in
+        getVkMetod(path: "/method/friends.get", queryItem: queryArray){[weak self] jsonData in
             
+            guard let self = self else {return}
             
-             let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+             //let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
             
-             print(json ?? "no json")
+            self.parseUserJSON(withDate: jsonData)
+            
+             //print(json ?? "no json")
           
             
         }
@@ -190,29 +193,27 @@ class ServiceNetwork {
     
     
     
-    func parseUserJSON(withDate data: Data)-> Array<User>?{
+    func parseUserJSON(withDate data: Data){
         
         let json = try? JSONSerialization.jsonObject(with: data, options: [])
         if let dictionary = json as? [String: Any] {
 
             if let nestedDictionary = dictionary["response"] as? NSDictionary {
-                // access nested dictionary values by key
+
                 if let items = nestedDictionary["items"] as? NSArray {
                     for item in items {
                         
                         let testUser = item as! NSDictionary
                         guard  let userFirstName = testUser["first_name"],
-                                let userLastName = testUser["last_name"]else {return nil}
+                                let userLastName = testUser["last_name"]else {return}
                         print ("\(userFirstName) \(userLastName)")
-                       // let tempUser: Array<User> = [User(name: "\(userFirstName) \(userLastName)", image: [UIImage(named: "1")!], newsTest: [NewsOfUser.randomOne])]
-                        //userList.append(tempUser)
-                       // return tempUser
+            
                     }
                     
                 }
             }
         }
-     return nil
+    
     }
     
 }
