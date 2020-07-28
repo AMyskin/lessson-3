@@ -67,10 +67,10 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         
         
         service.getFriends()
-        service.getFriendsPhoto()
+        //service.getFriendsPhoto()
         
         
-       // getFriendsPhoto()
+       
    
      
         //customSearchBar.delegate = self

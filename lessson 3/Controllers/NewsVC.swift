@@ -12,7 +12,7 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
 
     
     
-    
+    lazy var service = ServiceNetwork()
     
     var selectedCell = UICollectionViewCell()
     
@@ -28,6 +28,7 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        service.getFriendsPhoto()
         setupTableView()
         
         

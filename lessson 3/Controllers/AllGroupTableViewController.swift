@@ -14,7 +14,7 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate {
  
     
 
-    
+     lazy var service = ServiceNetwork()
     
     
     var allGroupList = Group.testGroup
@@ -26,6 +26,7 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 60
+        service.searchGroups( q: "music", quantity: 50)
  
     }
     

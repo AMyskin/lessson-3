@@ -22,7 +22,7 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
         self.tableView.rowHeight = 60
         
         service.getMyGroups()
-        service.searchGroups( q: "music", quantity: 50)
+        
 
     }
     
