@@ -16,110 +16,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R0b-cZ-cNN">
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vji-4e-w7G">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HST-re-Wia">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="346.66666666666669"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="V7c-aR-WR7">
-                                                <rect key="frame" x="87" y="20" width="240" height="306.66666666666669"/>
-                                                <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vk" translatesAutoresizingMaskIntoConstraints="NO" id="yt7-i5-V87">
-                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="W0y-f4-v7z"/>
-                                                            <constraint firstAttribute="width" constant="240" id="hTN-E3-WqQ"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NU-Wy-Kzt">
-                                                        <rect key="frame" x="93.666666666666657" y="70" width="53" height="26.333333333333329"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="admin" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mES-2q-g1w">
-                                                        <rect key="frame" x="20" y="116.33333333333334" width="200" height="34"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="200" id="Ifi-hi-8AX"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuK-T7-KZ5">
-                                                        <rect key="frame" x="74" y="170.33333333333334" width="92" height="26.333333333333343"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XUi-pH-Ywb">
-                                                        <rect key="frame" x="20" y="216.66666666666669" width="200" height="34"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                                    </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IC3-dd-s93">
-                                                        <rect key="frame" x="92.666666666666657" y="270.66666666666669" width="55" height="36"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                        <state key="normal" title="Signin"/>
-                                                        <connections>
-                                                            <segue destination="HII-tm-8sI" kind="presentation" identifier="Home" modalPresentationStyle="fullScreen" id="77a-Pf-cE8"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="XUi-pH-Ywb" firstAttribute="width" secondItem="mES-2q-g1w" secondAttribute="width" id="cEc-0m-j3r"/>
-                                                </constraints>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="V7c-aR-WR7" secondAttribute="bottom" constant="20" id="WO8-eW-nFJ"/>
-                                            <constraint firstItem="V7c-aR-WR7" firstAttribute="centerX" secondItem="HST-re-Wia" secondAttribute="centerX" id="bSr-HY-A1a"/>
-                                            <constraint firstItem="V7c-aR-WR7" firstAttribute="top" secondItem="HST-re-Wia" secondAttribute="top" constant="20" id="obi-h4-fUP"/>
-                                        </constraints>
-                                    </view>
-                                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vji-4e-w7G">
-                                        <rect key="frame" x="0.0" y="343" width="414" height="475"/>
-                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <wkWebViewConfiguration key="configuration">
-                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                            <wkPreferences key="preferences"/>
-                                        </wkWebViewConfiguration>
-                                    </wkWebView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstItem="Vji-4e-w7G" firstAttribute="leading" secondItem="B7l-xL-n9E" secondAttribute="leading" id="0z1-Hf-LOb"/>
-                                    <constraint firstItem="HST-re-Wia" firstAttribute="leading" secondItem="R0b-cZ-cNN" secondAttribute="leading" id="FHH-p4-x7n"/>
-                                    <constraint firstAttribute="bottom" secondItem="HST-re-Wia" secondAttribute="bottom" id="IQy-V1-p7v"/>
-                                    <constraint firstItem="Vji-4e-w7G" firstAttribute="top" secondItem="IC3-dd-s93" secondAttribute="bottom" constant="16.333333333333314" id="lUt-UQ-bro"/>
-                                    <constraint firstItem="B7l-xL-n9E" firstAttribute="trailing" secondItem="Vji-4e-w7G" secondAttribute="trailing" id="q1A-8e-C5K"/>
-                                    <constraint firstItem="B7l-xL-n9E" firstAttribute="bottom" secondItem="Vji-4e-w7G" secondAttribute="bottom" id="rvA-5Q-kNq"/>
-                                    <constraint firstAttribute="trailing" secondItem="HST-re-Wia" secondAttribute="trailing" id="zJd-tQ-np7"/>
-                                    <constraint firstItem="HST-re-Wia" firstAttribute="top" secondItem="R0b-cZ-cNN" secondAttribute="top" id="ziE-6J-DHo"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="Mz8-LD-Th0"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="B7l-xL-n9E"/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="aQa-Ky-5CX" appends="YES" id="27u-up-OvO"/>
-                                </connections>
-                            </scrollView>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="R0b-cZ-cNN" secondAttribute="trailing" id="KjO-Ry-hy6"/>
-                            <constraint firstItem="R0b-cZ-cNN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="RGJ-Qd-hVS"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="R0b-cZ-cNN" secondAttribute="bottom" id="Udg-ME-CNv"/>
-                            <constraint firstItem="R0b-cZ-cNN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hF7-IC-5kp"/>
-                            <constraint firstItem="HST-re-Wia" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="p27-kw-QXs"/>
+                            <constraint firstItem="Vji-4e-w7G" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="3hP-7J-zEu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Vji-4e-w7G" secondAttribute="bottom" id="G05-Fb-zb6"/>
+                            <constraint firstItem="Vji-4e-w7G" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="QsJ-oC-XmX"/>
+                            <constraint firstItem="Vji-4e-w7G" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="rDR-w2-q7a"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="AIu-KL-G5o"/>
                     <connections>
-                        <outlet property="loginTextField" destination="mES-2q-g1w" id="KBs-8i-IPV"/>
-                        <outlet property="passwordTextField" destination="XUi-pH-Ywb" id="wPf-RW-0TT"/>
-                        <outlet property="scrollView" destination="R0b-cZ-cNN" id="JYF-Jh-4uB"/>
                         <outlet property="webview" destination="Vji-4e-w7G" id="UyN-wK-JOb"/>
                     </connections>
                 </viewController>
@@ -733,6 +648,5 @@
         <image name="text.bubble" catalog="system" width="128" height="110"/>
         <image name="text.bubble.fill" catalog="system" width="128" height="110"/>
         <image name="text.justify" catalog="system" width="128" height="100"/>
-        <image name="vk" width="256" height="256"/>
     </resources>
 </document>

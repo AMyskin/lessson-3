@@ -505,10 +505,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "parseUserJSON(withDate:)"
-            landmarkType = "7">
+            startingLineNumber = "174"
+            endingLineNumber = "174">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -521,10 +519,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "getVkMetod(path:queryItem:)"
-            landmarkType = "7">
+            startingLineNumber = "174"
+            endingLineNumber = "174">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
