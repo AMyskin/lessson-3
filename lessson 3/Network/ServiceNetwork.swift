@@ -11,14 +11,13 @@ import UIKit
 class ServiceNetwork {
     
     let session = Session.instance
-    var userList: [Array<User>] = []
-    
-    func getUserList() -> [Array<User>]{
-        return userList
-    }
+
     
     
-    func getVkMetod(path: String, queryItem: [URLQueryItem] ){
+
+    
+    
+    func getVkMetod(path: String, queryItem: [URLQueryItem],_ callback: @escaping ( (Data) -> Void) ){
 
         var components = URLComponents()
         components.scheme = "https"
@@ -33,11 +32,9 @@ class ServiceNetwork {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data , responce , eror in
             if let data = data{
-
-                let json = try? JSONSerialization.jsonObject(with: data, options: [])
- 
-                 print(json ?? "no json")
                 
+                callback(data)
+         
             }
             if let eror = eror {
                 
@@ -56,8 +53,16 @@ class ServiceNetwork {
             URLQueryItem(name: "fields", value: "photo_50"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
-        getVkMetod(path: "/method/friends.get", queryItem: queryArray)
-        
+        getVkMetod(path: "/method/friends.get", queryItem: queryArray){jsonData in
+            
+            
+             let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+            
+             print(json ?? "no json")
+          
+            
+        }
+      
         print("--------------------\n")
         
 
@@ -72,7 +77,15 @@ class ServiceNetwork {
             URLQueryItem(name: "count", value: "10"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
-        getVkMetod(path: "/method/photos.getAll", queryItem: queryArray)
+        getVkMetod(path: "/method/photos.getAll", queryItem: queryArray){jsonData in
+            
+            
+             let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+            
+             print(json ?? "no json")
+          
+            
+        }
         
         print("--------------------\n")
         
@@ -85,7 +98,15 @@ class ServiceNetwork {
             URLQueryItem(name: "count", value: "10"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
-     getVkMetod(path: "/method/wall.get", queryItem: queryArray)
+     getVkMetod(path: "/method/wall.get", queryItem: queryArray){jsonData in
+         
+         
+          let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+         
+          print(json ?? "no json")
+       
+         
+     }
      
      print("--------------------\n")
      
@@ -99,7 +120,15 @@ class ServiceNetwork {
             URLQueryItem(name: "filters", value: "post,photo"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
-     getVkMetod(path: "/method/newsfeed.get", queryItem: queryArray)
+     getVkMetod(path: "/method/newsfeed.get", queryItem: queryArray){jsonData in
+         
+         
+          let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+         
+          print(json ?? "no json")
+       
+         
+     }
      
      print("--------------------\n")
      
@@ -113,7 +142,15 @@ class ServiceNetwork {
                 URLQueryItem(name: "extended", value: "1"),
                 URLQueryItem(name: "access_token", value: session.token)
             ]
-         getVkMetod(path: "/method/groups.get", queryItem: queryArray)
+         getVkMetod(path: "/method/groups.get", queryItem: queryArray){jsonData in
+             
+             
+              let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+             
+              print(json ?? "no json")
+           
+             
+         }
          
          print("--------------------\n")
         
@@ -130,7 +167,15 @@ class ServiceNetwork {
                  URLQueryItem(name: "count", value: String(quantity)),
                  URLQueryItem(name: "access_token", value: session.token)
              ]
-          getVkMetod(path: "/method/groups.search", queryItem: queryArray)
+          getVkMetod(path: "/method/groups.search", queryItem: queryArray){jsonData in
+              
+              
+               let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+              
+               print(json ?? "no json")
+            
+              
+          }
           
           
            
