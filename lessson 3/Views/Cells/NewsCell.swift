@@ -55,8 +55,20 @@ final class NewsCell: UITableViewCell {
         authorImageView.image = UIImage(named: "1")
         imageURL = item.imageUrl
         avatarURL = item.avatarUrl
-        countOfViewLabel.text = "\(item.countOfViews)"
-        countOfLikeLabel.text = "\(item.countOfLike)"
+        countOfViewLabel.text = getStringOfCount(item.countOfViews)
+        countOfLikeLabel.text = getStringOfCount(item.countOfLike)
+    }
+    
+    func getStringOfCount(_ num : Int) -> String {
+        var str = ""
+        
+        if num > 1000 {
+            str = String(format: "%.dK", num/1000)
+        }else {
+            str = "\(num)"
+        }
+        
+        return str
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {

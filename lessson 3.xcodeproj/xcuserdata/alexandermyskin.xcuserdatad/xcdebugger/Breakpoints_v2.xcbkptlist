@@ -863,7 +863,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "8F9B1CF1-B7B6-461D-82BB-D955D6DD6538"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lessson 3/Network/ServiceNetwork.swift"
@@ -872,6 +872,22 @@
             startingLineNumber = "320"
             endingLineNumber = "320"
             landmarkName = "getNewsFromJSON(findIn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FD35F9E9-7635-4613-A8EE-235CB97F0A27"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Views/Cells/NewsCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "getStringOfCount(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
