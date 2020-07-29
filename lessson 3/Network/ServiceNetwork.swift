@@ -120,7 +120,7 @@ class ServiceNetwork {
      print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.120"),
-            URLQueryItem(name: "count", value: "10"),
+            URLQueryItem(name: "count", value: "20"),
             URLQueryItem(name: "filters", value: "post,photo"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
@@ -233,139 +233,183 @@ class ServiceNetwork {
      
      }
     
-    func parseNewsJSON(withDate data: Data) -> [NewsOfUser]?{
-           
+    func getGroupsForNews(findIn: NSDictionary)->[Group]{
+        var groupsArray:[Group] = []
+        
+        if  let groups = findIn["groups"] as? NSArray{
+                        for item in groups {
+                            
+                       
+                            let item = item as? NSDictionary
+                            let id = item?["id"] as? Int
+                            let avatar = item?["photo_50"] as? String
+                            let name = item?["name"] as? String
+                            
+                            if  let id = id, let avatar = avatar, let name = name {
+                                
+                                let group: Group = Group(id: id, name: name, image: UIImage(named: "1")!, imageUrl: avatar)
+                                groupsArray.append(group)
+                            }
+                         
+                        }
+        }
+            return groupsArray
+    }
+    func getProfiles(findIn: NSDictionary)->[Profiles]{
+        var profilesArray:[Profiles] = []
+        if  let profiles = findIn["profiles"] as? NSArray {
+            
+            for item in profiles {
+              
+                let item = item as? NSDictionary
+                let id = item?["id"] as? Int
+                let avatar = item?["photo_50"] as? String
+                let firstName = item?["first_name"] as? String
+                let lastName = item?["last_name"] as? String
+                if  let id = id, let avatar = avatar, let firstName = firstName, let lastName = lastName {
+                    
+                    let profiles = Profiles(id: id, firstName: firstName, lastName: lastName, imageUrl: avatar)
+                    profilesArray.append(profiles)
+                }
+                
+            }
+        }
+        return profilesArray
+    }
+    
+    func getDate(item : NSDictionary) -> Date{
+        var date: Date
+         let newsDate = item["date"] as? Int
+        if let newsDate = newsDate {
+            date = Date(timeIntervalSince1970: TimeInterval(newsDate))
+            return date
+            
+        } else {
+            return Date()
+        }
+            
+   
+        
+    }
+    
+    func getNewsFromJSON(findIn: NSDictionary) -> [NewsOfUser]{
         var tmpNews: [NewsOfUser] = []
         var tmpGroup: [Group] = []
         var tmpProfiles: [Profiles] = []
-        var date: Date?
         var attachmentFotoSizeDicUrl: String?
-        let json = try? JSONSerialization.jsonObject(with: data, options: [])
-        if let dictionary = json as? [String: Any] {
+        
+        tmpGroup = getGroupsForNews(findIn: findIn)
+        tmpProfiles = getProfiles(findIn: findIn)
+        
+        if let items = findIn["items"] as? NSArray {
+                for item in items {
 
-                   if let response = dictionary["response"] as? NSDictionary {
+                    let testNews = item as? NSDictionary
+                    let sourceId = testNews?["source_id"] as? Int
+                    let views = testNews?["views"] as? NSDictionary
+                    let viewsCount = views?["count"] as? Int
+                    let text = testNews?["text"] as? String
+                    let likes = testNews?["likes"] as? NSDictionary
+                    let likesCount = likes?["count"] as? Int
+                    let attachments = testNews?["attachments"] as? NSArray
+                    let attachmentsDic = attachments?[0] as? NSDictionary
                     
-                    guard  let groups = response["groups"] as? NSArray else {return nil}
-                    for item in groups {
-                        
-                        guard
-                        let item = item as? NSDictionary,
-                        let id = item["id"] as? Int,
-                        let avatar = item["photo_50"] as? String,
-                        let name = item["name"] as? String
-                        else {return nil}
-                        let group: Group = Group(id: id, name: name, image: UIImage(named: "1")!, imageUrl: avatar)
-                        tmpGroup.append(group)
+                    var newsDate = Date()
+                    if let testNews = testNews {
+                        newsDate = getDate(item: testNews)
                     }
-                    
-                    guard  let profiles = response["profiles"] as? NSArray else {return nil}
-                    for item in profiles {
-                        
-                        guard
-                        let item = item as? NSDictionary,
-                        let id = item["id"] as? Int,
-                        let avatar = item["photo_50"] as? String,
-                        let firstName = item["first_name"] as? String,
-                        let lastName = item["last_name"] as? String
-                        
-                        else {return nil}
-                        let profiles = Profiles(id: id, firstName: firstName, lastName: lastName, imageUrl: avatar)
-                        tmpProfiles.append(profiles)
-                    }
-
-                       if let items = response["items"] as? NSArray {
-                           for item in items {
-                               
-                               
-                               
-                            guard
-                                let testNews = item as? NSDictionary,
-                                let sourceId = testNews["source_id"] as? Int,
-                                let views = testNews["views"] as? NSDictionary,
-                                let viewsCount = views["count"] as? Int,
-                                let text = testNews["text"] as? String,
-                                let likes = testNews["likes"] as? NSDictionary,
-                                let likesCount = likes["count"] as? Int,
-                                let attachments = testNews["attachments"] as? NSArray,
-                                let attachmentsDic = attachments[0] as? NSDictionary
-                                else {
-                                    print("чего то нет")
-                                    return nil}
-                            if let newsDate = testNews["date"] as? Int {
-                                date = Date(timeIntervalSince1970: TimeInterval(newsDate))
-                            }
-                            guard let dateNews = date else {return nil}
-                            
-                            var author = ""
-                            var avatarUrl = ""
-                            
-                            tmpGroup.forEach{(groups) in
-                                
-                                if (-sourceId) == groups.id {
-                                    print(groups.name)
-                                    author = groups.name
-                                    if let avatar = groups.imageUrl {
-                                        avatarUrl = avatar
-                                    }
-                                }
-                                
-                            }
-                            tmpProfiles.forEach{(profiles) in
-                                      
-                                      if (sourceId) == profiles.id {
-                                          print(profiles.firstName)
-                                          author = profiles.firstName
-                                          if let avatar = profiles.imageUrl {
-                                              avatarUrl = avatar
-                                          }
-                                      }
-                                      
-                                  }
-                            
-
-                            
-                            
-                            if  let attachmentFoto = attachmentsDic["photo"] as? NSDictionary {
-                                
-                                guard let attachmentFotoSize = attachmentFoto["sizes"] as? NSArray else {return nil}
-                                let index = attachmentFotoSize.count-1
-                                let attachmentFotoSizeDic = attachmentFotoSize[index] as? NSDictionary
-                                attachmentFotoSizeDicUrl = attachmentFotoSizeDic?["url"] as? String
-                            } else if let attachmentVideo = attachmentsDic["video"] as? NSDictionary,
-                                let attachmentVideoSize = attachmentVideo["image"] as? NSArray{
-                              
-                                let index = attachmentVideoSize.count-1
-                                let attachmentVideoSizeDic = attachmentVideoSize[index] as? NSDictionary
-                                attachmentFotoSizeDicUrl = attachmentVideoSizeDic?["url"] as? String
-                                
-                            }else if let attachmentDoc = attachmentsDic["doc"] as? NSDictionary {
-                                print("doc")
-                            }
-                            
-                            
-                              
-                              
-                              
-                              
-                             let tmpNew: NewsOfUser = NewsOfUser(author: author,
-                                                                 avatarUrl: avatarUrl,
-                                                                 image: [UIImage(named: "1")!],
-                                                                 imageUrl: attachmentFotoSizeDicUrl,
-                                                                 userDate: "1.1.2020",
-                                                                 date: dateNews,
-                                                                 newsTest: text,
-                                                                 countOfViews: viewsCount,
-                                                                 countOfLike: likesCount,
-                                                                 isLiked: true)
-                               print ("\(text) \(likesCount) \(viewsCount)")
-                              
-                              tmpNews.append(tmpNew)
-                   
+                    var author = ""
+                    var avatarUrl = ""
+                 
+                 tmpGroup.forEach{(groups) in
+                     
+                     if let sourceId = sourceId , (-sourceId) == groups.id {
+                         print(groups.name)
+                         author = groups.name
+                         if let avatar = groups.imageUrl {
+                             avatarUrl = avatar
+                         }
+                     }
+                     
+                 }
+                 tmpProfiles.forEach{(profiles) in
+                           
+                           if (sourceId) == profiles.id {
+                               print(profiles.firstName)
+                               author = profiles.firstName
+                               if let avatar = profiles.imageUrl {
+                                   avatarUrl = avatar
+                               }
                            }
                            
                        }
-                   }
-               }
+                 
+
+                 
+                 
+                 if  let attachmentsDic = attachmentsDic ,
+                    let attachmentFoto = attachmentsDic["photo"] as? NSDictionary,
+                 let attachmentFotoSize = attachmentFoto["sizes"] as? NSArray{
+                     
+                    
+                     let index = attachmentFotoSize.count-1
+                     let attachmentFotoSizeDic = attachmentFotoSize[index] as? NSDictionary
+                     attachmentFotoSizeDicUrl = attachmentFotoSizeDic?["url"] as? String
+                    
+                 } else if let attachmentsDic = attachmentsDic ,
+                    let attachmentVideo = attachmentsDic["video"] as? NSDictionary,
+                     let attachmentVideoSize = attachmentVideo["image"] as? NSArray{
+                   
+                     let index = attachmentVideoSize.count-1
+                     let attachmentVideoSizeDic = attachmentVideoSize[index] as? NSDictionary
+                     attachmentFotoSizeDicUrl = attachmentVideoSizeDic?["url"] as? String
+                     
+                 }else if let attachmentsDic = attachmentsDic , let attachmentDoc = attachmentsDic["doc"] as? NSDictionary {
+                     attachmentFotoSizeDicUrl = attachmentDoc["url"] as? String
+                 }
+                 
+                 
+                    if let text = text , let viewsCount = viewsCount, let likesCount = likesCount {
+                        
+                        let tmpNew: NewsOfUser = NewsOfUser(author: author,
+                                                            avatarUrl: avatarUrl,
+                                                            image: [UIImage(named: "1")!],
+                                                            imageUrl: attachmentFotoSizeDicUrl,
+                                                            userDate: "1.1.2020",
+                                                            date: newsDate,
+                                                            newsTest: text,
+                                                            countOfViews: viewsCount,
+                                                            countOfLike: likesCount,
+                                                            isLiked: true)
+                        print ("\(text) \(likesCount) \(viewsCount)")
+                        
+                        tmpNews.append(tmpNew)
+                    }
+                   
+                   
+                   
+        
+                }
+                
+            }
+        return tmpNews
+    }
+    
+    func parseNewsJSON(withDate data: Data) -> [NewsOfUser]?{
+        
+        var tmpNews: [NewsOfUser] = []
+        
+        let json = try? JSONSerialization.jsonObject(with: data, options: [])
+        if let dictionary = json as? [String: Any] {
+            
+            if let response = dictionary["response"] as? NSDictionary {
+                
+                
+              tmpNews = getNewsFromJSON(findIn: response)
+                
+                
+            }
+        }
            
             
                

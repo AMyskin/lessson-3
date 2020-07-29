@@ -65,8 +65,9 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         super.viewDidLoad()
         self.tableView.rowHeight = 44
         
-        
         service.getFriends()
+        
+        
         //service.getFriendsPhoto()
         
         

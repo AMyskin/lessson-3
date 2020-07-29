@@ -17,6 +17,9 @@ final class NewsCell: UITableViewCell {
     @IBOutlet weak var newsTextLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     
+    @IBOutlet weak var countOfViewLabel: UILabel!
+    @IBOutlet weak var countOfLikeLabel: UILabel!
+    
     var imageURL: String? {
         didSet{
             if let imageURL = imageURL, let url = URL(string: imageURL) {
@@ -52,6 +55,8 @@ final class NewsCell: UITableViewCell {
         authorImageView.image = UIImage(named: "1")
         imageURL = item.imageUrl
         avatarURL = item.avatarUrl
+        countOfViewLabel.text = "\(item.countOfViews)"
+        countOfLikeLabel.text = "\(item.countOfLike)"
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
