@@ -60,13 +60,14 @@ final class NewsCell: UITableViewCell {
     }
     
     func getStringOfCount(_ num : Int) -> String {
-        var str = ""
+        var str = "\(num)"
         
-        if num > 1000 {
-            str = String(format: "%.dK", num/1000)
-        }else {
-            str = "\(num)"
-        }
+        if num > 1000 && num < 2000 {
+            str = String(format: "%1d.1K", num/1000)
+        }else  if num > 2000 {
+            str = String(format: "%1dK", num/1000)
+            
+        } 
         
         return str
     }
