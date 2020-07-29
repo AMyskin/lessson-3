@@ -70,23 +70,18 @@ extension LoginViewController: WKNavigationDelegate {
                 dict[key] = value
                 return dict
         }
-        
-        
+
         
         guard let token = params["access_token"],
             let userId  = Int(params["user_id"] ?? "") else {return}
-        
-       // print(userId)
-       // print(token)
+  
         
         let session = Session.instance
         session.token = token
         session.userId = userId
         
         passData()
-        
-        //navigationController
-        
+
         
         decisionHandler(.cancel)
     }
