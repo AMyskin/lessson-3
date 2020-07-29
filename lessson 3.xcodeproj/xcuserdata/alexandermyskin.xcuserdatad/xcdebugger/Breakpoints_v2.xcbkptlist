@@ -505,8 +505,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450">
+            startingLineNumber = "458"
+            endingLineNumber = "458">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -519,8 +519,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "450"
-            endingLineNumber = "450">
+            startingLineNumber = "458"
+            endingLineNumber = "458">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -613,8 +613,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
             landmarkName = "parseUserJSON(withDate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -709,8 +709,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "416"
-            endingLineNumber = "416"
+            startingLineNumber = "424"
+            endingLineNumber = "424"
             landmarkName = "parseNewsJSON(withDate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -741,8 +741,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "417"
-            endingLineNumber = "417"
+            startingLineNumber = "425"
+            endingLineNumber = "425"
             landmarkName = "parseNewsJSON(withDate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -757,8 +757,120 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
+            landmarkName = "getNewsFromJSON(findIn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F73CD56F-8202-4D7E-A728-24D320DC443E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Network/ServiceNetwork.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
+            landmarkName = "getNewsFromJSON(findIn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "32C8082F-478A-4E64-903C-7552B163C6F7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Network/ServiceNetwork.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "367"
+            endingLineNumber = "367"
+            landmarkName = "getNewsFromJSON(findIn:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "32C8082F-478A-4E64-903C-7552B163C6F7 - 5638edcce8a2e45"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Amyskin.ServiceNetwork.getNewsFromJSON(findIn: __C.NSDictionary) -&gt; Swift.Array&lt;Amyskin.NewsOfUser&gt;"
+                  moduleName = "Amyskin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexandermyskin/Desktop/SwiftLessons/geekbrains/unit3/lessson%203/lessson%203/Network/ServiceNetwork.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "363"
+                  endingLineNumber = "363"
+                  offsetFromSymbolStart = "11563">
+               </Location>
+               <Location
+                  uuid = "32C8082F-478A-4E64-903C-7552B163C6F7 - 5638edcce8a2e45"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Amyskin.ServiceNetwork.getNewsFromJSON(findIn: __C.NSDictionary) -&gt; Swift.Array&lt;Amyskin.NewsOfUser&gt;"
+                  moduleName = "Amyskin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexandermyskin/Desktop/SwiftLessons/geekbrains/unit3/lessson%203/lessson%203/Network/ServiceNetwork.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "363"
+                  endingLineNumber = "363"
+                  offsetFromSymbolStart = "11826">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F132AFAF-E449-4053-9DA0-BA81C43ACD53"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Network/ServiceNetwork.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
+            landmarkName = "getNewsFromJSON(findIn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FAA2F24D-0BA7-4B39-B6BE-A594D6B7ED27"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Network/ServiceNetwork.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
+            landmarkName = "getNewsFromJSON(findIn:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8F9B1CF1-B7B6-461D-82BB-D955D6DD6538"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Network/ServiceNetwork.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
             landmarkName = "getNewsFromJSON(findIn:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -63,4 +63,17 @@ final class NewsCell: UITableViewCell {
         sender.isSelected.toggle()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        authorNameLabel.text = nil
+          publishedDateLabel.text = nil
+          newsTextLabel.text = nil
+          photoImageView.image = nil
+          authorImageView.image = nil
+          imageURL = nil
+          avatarURL = nil
+          countOfViewLabel.text = nil
+          countOfLikeLabel.text = nil
+    }
+    
 }

@@ -306,12 +306,20 @@ class ServiceNetwork {
 
                     let testNews = item as? NSDictionary
                     let sourceId = testNews?["source_id"] as? Int
+                    var attachments = testNews?["attachments"] as? NSArray
                     let views = testNews?["views"] as? NSDictionary
                     let viewsCount = views?["count"] as? Int
-                    let text = testNews?["text"] as? String
+                    var text = testNews?["text"] as? String
                     let likes = testNews?["likes"] as? NSDictionary
                     let likesCount = likes?["count"] as? Int
-                    let attachments = testNews?["attachments"] as? NSArray
+                    
+                    if attachments == nil {
+                        let preAttachments = testNews?["copy_history"] as? NSArray
+                        let nextAttachments = preAttachments?[0] as? NSDictionary
+                        attachments = nextAttachments?["attachments"] as? NSArray
+                        text = nextAttachments?["text"] as? String
+                    }
+                    
                     let attachmentsDic = attachments?[0] as? NSDictionary
                     
                     var newsDate = Date()
