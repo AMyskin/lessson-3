@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class NewsCell: UITableViewCell {
     
@@ -16,6 +17,27 @@ final class NewsCell: UITableViewCell {
     @IBOutlet weak var newsTextLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     
+    var imageURL: String? {
+        didSet{
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                photoImageView.kf.setImage(with: url)
+            } else {
+                photoImageView.image = nil
+                photoImageView.kf.cancelDownloadTask()
+            }
+        }
+    }
+    var avatarURL: String? {
+          didSet{
+              if let avatarURL = avatarURL, let url = URL(string: avatarURL) {
+                  authorImageView.kf.setImage(with: url)
+              } else {
+                  authorImageView.image = nil
+                  authorImageView.kf.cancelDownloadTask()
+              }
+          }
+      }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         authorImageView?.makeCircle()
@@ -24,10 +46,12 @@ final class NewsCell: UITableViewCell {
     func configure(item: NewsOfUser, dateFormatter: DateFormatter) {
         
         authorNameLabel.text = item.author
-        publishedDateLabel.text = item.userDate
+        publishedDateLabel.text = dateFormatter.string(from: item.date)
         newsTextLabel.text = item.newsTest
         photoImageView.image = item.image[0]
         authorImageView.image = UIImage(named: "1")
+        imageURL = item.imageUrl
+        avatarURL = item.avatarUrl
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {

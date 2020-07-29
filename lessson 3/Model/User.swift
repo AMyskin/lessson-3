@@ -72,6 +72,7 @@ public struct User {
                     .compactMap({ UIImage(named: $0) }),
                 userDate: RandomDate.generateRandomDate(daysBack: 365),
                 
+                date: Date(),
                 newsTest: Lorem.sentences(Int.random(in: 2...5)),
                 countOfViews: Int.random(in: 100...900),
                 countOfLike: Int.random(in: 5...30),

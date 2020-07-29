@@ -26,7 +26,14 @@ final class NewsViewController: UITableViewController {
         super.viewDidLoad()
         news = (1...5).map { _ in NewsOfUser.randomOne }
         //service.getUserWall()
-        service.getUserNewsFeed()
+        
+        
+        service.getUserNewsFeed({(news) in
+            self.news = news
+            DispatchQueue.main.async { // Correct
+                self.tableView.reloadData()
+            }
+        })
     }
     
     // MARK: - Navigation
@@ -42,6 +49,7 @@ final class NewsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsCell
         cell.configure(item: news[indexPath.row], dateFormatter: dateFormatter)
+        
         return cell
     }
     

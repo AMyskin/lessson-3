@@ -14,6 +14,8 @@ struct Group: Equatable {
             lhs.image == rhs.image
     }
     
+    var id: Int?
+    
     let name: String
     let image: UIImage
     var imageUrl: String? 

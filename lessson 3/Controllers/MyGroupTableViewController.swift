@@ -36,7 +36,7 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
                      self.tableView.reloadData()
                  }
          
-            print(self.myGroupList.count)
+            //print(self.myGroupList.count)
                 })
                     
         
