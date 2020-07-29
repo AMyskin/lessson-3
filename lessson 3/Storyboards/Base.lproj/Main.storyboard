@@ -395,7 +395,7 @@
             </objects>
             <point key="canvasLocation" x="3479.7101449275365" y="1125.6696428571429"/>
         </scene>
-        <!--News View Controller-->
+        <!--Новости-->
         <scene sceneID="Yyx-9u-BlL">
             <objects>
                 <tableViewController id="TF3-rL-yjX" customClass="NewsViewController" customModule="Amyskin" customModuleProvider="target" sceneMemberID="viewController">
@@ -557,7 +557,7 @@
                             <outlet property="delegate" destination="TF3-rL-yjX" id="WbS-rf-RVb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="HIg-Lk-apd"/>
+                    <navigationItem key="navigationItem" title="Новости" id="HIg-Lk-apd"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2cU-EF-qer" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
