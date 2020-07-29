@@ -327,15 +327,19 @@ class ServiceNetwork {
                             
                             if  let attachmentFoto = attachmentsDic["photo"] as? NSDictionary {
                                 
-                                let attachmentFotoSize = attachmentFoto["sizes"] as? NSArray
-                                let attachmentFotoSizeDic = attachmentFotoSize?[6] as? NSDictionary
+                                guard let attachmentFotoSize = attachmentFoto["sizes"] as? NSArray else {return nil}
+                                let index = attachmentFotoSize.count-1
+                                let attachmentFotoSizeDic = attachmentFotoSize[index] as? NSDictionary
                                 attachmentFotoSizeDicUrl = attachmentFotoSizeDic?["url"] as? String
-                            } else {
-                                let attachmentVideo = attachmentsDic["video"] as? NSDictionary
-                                let attachmentVideoSize = attachmentVideo?["image"] as? NSArray
-                                let attachmentVideoSizeDic = attachmentVideoSize?[3] as? NSDictionary
+                            } else if let attachmentVideo = attachmentsDic["video"] as? NSDictionary,
+                                let attachmentVideoSize = attachmentVideo["image"] as? NSArray{
+                              
+                                let index = attachmentVideoSize.count-1
+                                let attachmentVideoSizeDic = attachmentVideoSize[index] as? NSDictionary
                                 attachmentFotoSizeDicUrl = attachmentVideoSizeDic?["url"] as? String
                                 
+                            }else if let attachmentDoc = attachmentsDic["doc"] as? NSDictionary {
+                                print("doc")
                             }
                             
                             
