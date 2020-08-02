@@ -98,7 +98,7 @@ class CharPicker: UIView {
         unhiglightButtons()
         if buttonIndex >= buttons.count {
             buttonIndex = buttons.count-1
-        } else  if buttonIndex < 0 {
+        } else  if buttonIndex <= 0 {
             buttonIndex = 0
         }
         let button = buttons[buttonIndex]

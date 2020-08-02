@@ -33,10 +33,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         urlComponents.host = "oauth.vk.com"
         urlComponents.path = "/authorize"
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "7552977"),
+            URLQueryItem(name: "client_id", value: "7556222"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-            URLQueryItem(name: "scope", value: "wall,friends"),
+            URLQueryItem(name: "scope", value: "wall,friends,photos"),
             URLQueryItem(name: "response_type", value: "token"),
             URLQueryItem(name: "v", value: "5.68")
         ]

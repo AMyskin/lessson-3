@@ -78,12 +78,12 @@ class UserNewsCell: UITableViewCell, LikeDelegate {
   
     }
     
-    func configure(model: NewsOfUser) {
+    func configure(model: NewsOfUser, dateFormatter: DateFormatter) {
         userNameLabel.text = model.author
-        newsDateLabel.text = model.userDate.description
+        newsDateLabel.text = dateFormatter.string(from: model.date)
         newsTextLabel.text = model.newsTest
         countOfViewsLabel.text = String(model.countOfViews)
-        avatarView.avatarImage = model.avatar
+        avatarView.imageURL = model.avatarUrl
         likeControl.likesCount = model.countOfLike
         //print(String(model.countOfLike))
         likeControl.isLiked = model.isLiked

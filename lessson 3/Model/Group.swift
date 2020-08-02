@@ -11,24 +11,13 @@ import UIKit
 struct Group: Equatable {
     static func == (lhs: Group, rhs: Group) -> Bool {
         return lhs.name == rhs.name &&
-            lhs.image == rhs.image
+            lhs.imageUrl == rhs.imageUrl
     }
     
     var id: Int?
-    
     let name: String
-    let image: UIImage
     var imageUrl: String? 
     
-   
-    
-    static let testGroup: [Group] = [Group(name: "Группа 1", image: UIImage(named: "1")!),
-                            Group(name: "Группа 2", image: UIImage(named: "2")!),
-                            Group(name: "Группа 3", image: UIImage(named: "3")!),
-                            Group(name: "Группа 4", image: UIImage(named: "4")!),
-                            Group(name: "Группа 5", image: UIImage(named: "5")!),
-                            Group(name: "Группа 6", image: UIImage(named: "6")!)
-    ]
     
     
 }

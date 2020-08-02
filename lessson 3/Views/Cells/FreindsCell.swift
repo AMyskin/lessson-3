@@ -9,15 +9,11 @@
 import UIKit
 
 
-//protocol FreindsCellDelegate: class {
-//
-//    func buttonTapped(cell: FreindsCell, button : UIButton)
-//
-//}
+
 
 class FreindsCell: UITableViewCell {
 
-    
+ 
     
     //weak var delegate: FreindsCellDelegate?
     
@@ -42,11 +38,11 @@ class FreindsCell: UITableViewCell {
 //    }
     
 
-    func configure(name: String, emblem: UIImage) {
+    func configure(friend: FriendData) {
         
-        self.name.text = name
-        self.avatarView.avatarImage = emblem
-        self.backgroundColor = UIColor.black
+        self.name.text = "\(friend.firstName) \(friend.lastName)"
+        self.avatarView.imageURL = friend.avatar
+        //self.backgroundColor = UIColor.black
     }
 
     override func prepareForReuse() {

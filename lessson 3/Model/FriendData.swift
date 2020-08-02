@@ -4,21 +4,28 @@ import Foundation
 struct FriendData: Codable {
     let id: Int
     let firstName, lastName: String
-    let photo50: String
+    let avatar: String
     let online: Int
-    let trackCode: String
-    let lists: [Int]?
-    let deactivated: String?
+
 
     enum CodingKeys: String, CodingKey {
         case id
         case firstName = "first_name"
         case lastName = "last_name"
-        case photo50 = "photo_50"
+        case avatar = "photo_50"
         case online
-        case trackCode = "track_code"
-        case lists, deactivated
+
     }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        
+        self.firstName = try container.decode(String.self, forKey: .firstName)
+        self.lastName = try container.decode(String.self, forKey: .lastName)
+        self.avatar = try container.decode(String.self, forKey: .avatar)
+        self.online = try container.decode(Int.self, forKey: .online)
+    }
+    
 }
 
 

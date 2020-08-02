@@ -9,9 +9,16 @@
 import Foundation
 
 
-struct Profiles {
+struct Profiles: Decodable {
     let id: Int
     let firstName: String
     let lastName: String
     var imageUrl: String?
+    
+     enum CodingKeys: String, CodingKey {
+        case id
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case imageUrl = "photo_50"
+    }
 }

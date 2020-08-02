@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PhotoCollectionViewCell: UICollectionViewCell {
 
@@ -16,9 +17,21 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var countLabel: UILabel!
     
+    var photoURL: String? {
+        didSet{
+            if let photoURL = photoURL, let url = URL(string: photoURL) {
+                photoImageView.kf.setImage(with: url)
+            } else {
+                photoImageView.image = nil
+                photoImageView.kf.cancelDownloadTask()
+            }
+        }
+    }
+    
     
     override func prepareForReuse() {
         super.prepareForReuse()
         containerView.isHidden = true
+        photoURL = nil
     }
 }

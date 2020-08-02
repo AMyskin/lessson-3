@@ -7,8 +7,31 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SwipeVC: UIViewController {
+    
+    
+    var imageURL: String? {
+        didSet{
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                image.kf.setImage(with: url)
+            } else {
+                image.image = nil
+                image.kf.cancelDownloadTask()
+            }
+        }
+    }
+    var nextImageURL: String? {
+        didSet{
+            if let nextImageURL = nextImageURL, let url = URL(string: nextImageURL) {
+                nextImageView.kf.setImage(with: url)
+            } else {
+                nextImageView.image = nil
+                nextImageView.kf.cancelDownloadTask()
+            }
+        }
+    }
     
     var swipeInteractionController: SwipeInteractionController?
     
@@ -22,6 +45,7 @@ class SwipeVC: UIViewController {
     lazy var nextImageView = UIImageView()
     
     var userImage : [UIImage] = []
+    var userImageUrl : [String] = []
     var indexOfImage : Int = 0
     @IBOutlet weak var indexOfPhotoLabel: UILabel!
     
@@ -38,17 +62,13 @@ class SwipeVC: UIViewController {
         self.view.addGestureRecognizer(recognizer)
         
     }
-    
-    override var prefersStatusBarHidden: Bool{
-        get{
-            return true
-        }
-    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         //print(#function)
         //print("indexOfImage=\(indexOfImage)")
-         image.image = userImage[indexOfImage]
+         //image.image = userImage[indexOfImage]
+        imageURL = userImageUrl[indexOfImage]
          indexOfPhotoLabel.text = "\(indexOfImage+1)"
         transitionController?.endView = image
         
@@ -127,7 +147,9 @@ class SwipeVC: UIViewController {
                 })
                 if canSlide(myPanWay){
                     let nextIndex = myPanWay == .RightToLeft ? indexOfImage + 1 : indexOfImage - 1
-                    nextImageView.image = userImage[nextIndex]
+                    //nextImageView.image = userImage[nextIndex]
+                    nextImageURL = userImageUrl[nextIndex]
+                    
                     view.addSubview(nextImageView)
                     
                     let offsetX = myPanWay == .RightToLeft ? view.bounds.width: -view.bounds.width
@@ -149,7 +171,8 @@ class SwipeVC: UIViewController {
                     self.image.alpha = 1
                     self.indexOfPhotoLabel.text = "\(self.indexOfImage+1)"
                     self.viewBeforeImage.transform = .identity
-                    self.image.image = self.userImage[self.indexOfImage]
+                    //self.image.image = self.userImage[self.indexOfImage]
+                    self.imageURL = self.userImageUrl[self.indexOfImage]
                     self.nextImageView.removeFromSuperview()
                 }
                 interactiveAnimator.pauseAnimation()
@@ -290,7 +313,8 @@ class SwipeVC: UIViewController {
     
     private func changeImage(){
         
-        image.image = userImage[indexOfImage]
+        //image.image = userImage[indexOfImage]
+        imageURL = userImageUrl[indexOfImage]
         indexOfPhotoLabel.text = "\(indexOfImage+1)"
         imageAnimate()
     }
@@ -337,7 +361,7 @@ class SwipeVC: UIViewController {
     func canSlide(_ direction: MyPanWay) -> Bool {
         
         if direction == .RightToLeft {
-            return indexOfImage < userImage.count - 1
+            return indexOfImage < userImageUrl.count - 1
         } else {
             return indexOfImage > 0
         }

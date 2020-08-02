@@ -8,26 +8,55 @@
 
 import UIKit
 
-class AllGroupTableViewController: UITableViewController, GroupCellDelegate {
+class AllGroupTableViewController: UITableViewController, GroupCellDelegate, UISearchBarDelegate {
 
     
- 
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
 
      lazy var service = ServiceNetwork()
     
     
-    var allGroupList = Group.testGroup
+    var allGroupList: [Group] = []
                             
 
+    
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 60
-        service.searchGroups( q: "music", quantity: 50)
+        searchBar.delegate = self
+        
+        
+        service.searchGroups(q: " ", quantity: 50 , {(group) in
+                          self.allGroupList = group
+                  DispatchQueue.main.async { // Correct
+                           self.tableView.reloadData()
+                       }
+               
+                  //print(self.myGroupList.count)
+                      })
  
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let search = searchText == "" ? " ": searchText
+        
+        
+        service.searchGroups(q: search, quantity: 50 , {(group) in
+            self.allGroupList = group
+            DispatchQueue.main.async { // Correct
+                self.tableView.reloadData()
+            }
+            
+        })
+        
+        
+        self.tableView.reloadData()
     }
     
  
@@ -46,7 +75,8 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GroupCell
 
         cell.name.text = allGroupList[indexPath.row].name
-        cell.avatarView.avatarImage = allGroupList[indexPath.row].image
+       // cell.avatarView.avatarImage = allGroupList[indexPath.row].image
+         cell.avatarView.imageURL = allGroupList[indexPath.row].imageUrl
         cell.delegate = self
 
         return cell

@@ -16,15 +16,17 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     
     lazy var service = ServiceNetwork()
     let searchController = UISearchController(searchResultsController: nil)
-    var filteredUsers: [User]  = []
-    var filteredUsersWithSection : [Array<User>] = []
-    var filteredChars: [String] = User.sectionsOfFriends
+    var friends: [FriendData] = []
+    var friendsWithSection : [Array<FriendData>] = []
+    var filteredUsers: [FriendData]  = []
+    var filteredUsersWithSection : [Array<FriendData>] = []
+    var filteredChars: [String] = []
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-    var userList = User.arrayOfFriends
+  //  var userList = User.arrayOfFriends
     
-    var chars = User.sectionsOfFriends
+  //  var chars = User.sectionsOfFriends
     
     
     
@@ -59,13 +61,58 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
 //             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //             return storyboard.instantiateViewController(withIdentifier: "FriendsVC") as? FriendsVC
 //         }
+    
+    
+    func sectionsOfFriends(friends: [FriendData]) -> Array<String>{
+        return      Array(
+            Set(
+                friends.compactMap ({
+                    var tmp : String?
+                    if String($0.lastName.prefix(1)).uppercased() != "" {
+                        tmp = String($0.lastName.prefix(1)).uppercased()
+                    } else {
+                        tmp = nil
+                    }
+                    return tmp
+                })
+            )
+        ).sorted()
+    }
+    
+    func arrayOfFriends(sections: Array<String> , friens: [FriendData]) ->Array<Array<FriendData>> {
+        var tmp:Array<Array<FriendData>> = []
+        for section in sections {
+            let letter: String = section
+            tmp.append(friens.filter { $0.lastName.hasPrefix(letter) && letter != ""})
+        }
+        return tmp
+    }
+    
+    
+
+       
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 44
         
-        service.getFriends()
+        
+        
+        service.getFriends({[weak self] (friends) in
+            guard let self = self else {return}
+            self.friends = friends
+            self.filteredChars = self.sectionsOfFriends(friends: friends)
+            self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: friends)
+
+            print(self.filteredChars)
+            DispatchQueue.main.async { // Correct
+                self.tableView.reloadData()
+                self.charPicker.delegate = self
+                self.charPicker.chars =  self.filteredChars
+                
+            }
+        })
         
         
         //service.getFriendsPhoto()
@@ -75,8 +122,8 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
    
      
         //customSearchBar.delegate = self
-        charPicker.delegate = self
-        charPicker.chars = chars
+        //charPicker.delegate = self
+        //charPicker.chars = filteredChars
         
         
         
@@ -117,11 +164,11 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if isFiltering {
-            return filteredChars.count
-        }
+//        if isFiltering {
+//            return filteredChars.count
+//        }
         
-        return chars.count
+        return filteredChars.count
         
     }
     
@@ -158,7 +205,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             return filteredUsersWithSection[section].count
         }
         
-        return userList[section].count
+        return friendsWithSection[section].count
     }
     
     
@@ -166,18 +213,18 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FreindsCell
         
         
-        let user: User
+        let user: FriendData
         
         if isFiltering {
             user = filteredUsersWithSection[indexPath.section][indexPath.row]
         } else {
-            user = userList[indexPath.section][indexPath.row]
+            user = friendsWithSection[indexPath.section][indexPath.row]
         }
         
         
-        
-        cell.name.text = user.name
-        cell.avatarView.avatarImage = user.avatar
+        cell.configure(friend: user)
+       // cell.name.text = "\(user.firstName) \(user.lastName)"
+        //cell.avatarView.avatarImage = user.avatar
         //cell.avatarButton.setImage(user.avatar, for: .normal)
         
         let animation = AnimationFactory.makeSlideIn(duration: 1, delayFactor: 0.01)
@@ -201,11 +248,11 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         if isFiltering {
             //testVC?.userImage = filteredUsersWithSection[indexPath.section][indexPath.row].image
            // testVC?.userNews = filteredUsersWithSection[indexPath.section][indexPath.row].newsTest
-            testVC?.user = filteredUsersWithSection[indexPath.section][indexPath.row]
+            testVC?.friend = filteredUsersWithSection[indexPath.section][indexPath.row]
         } else {
             //testVC?.userImage = userList[indexPath.section][indexPath.row].image
             // testVC?.userNews = userList[indexPath.section][indexPath.row].newsTest
-            testVC?.user = userList[indexPath.section][indexPath.row]
+            testVC?.friend = friendsWithSection[indexPath.section][indexPath.row]
         }
         navigationController?.pushViewController(testVC!, animated: true)
         
@@ -278,9 +325,9 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     
     func filterContentForSearchText(_ searchText: String) {
         
-        var allUsers: [User] = []
-        for (index, _) in userList.enumerated() {
-            for item in userList[index]{
+        var allUsers: [FriendData] = []
+        for (index, _) in friendsWithSection.enumerated() {
+            for item in friendsWithSection[index]{
                 
                 allUsers.append(item)
             }
@@ -288,9 +335,9 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         }
         
         
-        filteredUsers = allUsers.filter { (user: User) -> Bool in
+        filteredUsers = allUsers.filter { (user: FriendData) -> Bool in
             
-            return user.name.lowercased().contains(searchText.lowercased())
+            return user.lastName.lowercased().contains(searchText.lowercased()) || user.firstName   .lowercased().contains(searchText.lowercased())
         }
         
         
@@ -302,18 +349,18 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             Array(
                 Set(
                     filteredUsers.map ({
-                        String($0.name.prefix(1)).uppercased()
+                        String($0.lastName.prefix(1)).uppercased()
                     })
                 )
             ).sorted()
         
-        var arrayOfFriends:  Array<Array<User>>
+        var arrayOfFriends:  Array<Array<FriendData>>
         {
-            var tmp:Array<Array<User>> = []
+            var tmp:Array<Array<FriendData>> = []
             
             for section in filteredChars {
                 let letter: String = section
-                tmp.append(filteredUsers.filter { $0.name.hasPrefix(letter) })
+                tmp.append(filteredUsers.filter { $0.lastName.hasPrefix(letter) })
             }
             return tmp
             
@@ -321,7 +368,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         filteredUsersWithSection = arrayOfFriends
         
         if searchText == "" {
-            filteredChars = User.sectionsOfFriends
+            filteredChars = self.sectionsOfFriends(friends: friends)
         }
         
         charPicker.chars = filteredChars

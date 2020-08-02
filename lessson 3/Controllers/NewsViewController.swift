@@ -25,7 +25,7 @@ final class NewsViewController: UITableViewController {
     
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
         return dateFormatter
     }()
     
@@ -48,11 +48,13 @@ final class NewsViewController: UITableViewController {
     }
     
     func getUserFeed(){
-        service.getUserNewsFeed({(news) in
-             self.news = news
+        
+        service.getUserNewsFeed(newQuery : true,{(newsIn) in
+             self.news = newsIn
              DispatchQueue.main.async { // Correct
                  self.tableView.reloadData()
                 self.removeLoadingScreen()
+                self.refreshControl?.endRefreshing()
              }
          })
     }
@@ -60,10 +62,12 @@ final class NewsViewController: UITableViewController {
     @objc func handleRefreshControl() {
          // Update your content…
         getUserFeed()
-        DispatchQueue.main.async {
-            self.refreshControl?.endRefreshing()
-         }
+//        DispatchQueue.main.async {
+//            self.refreshControl?.endRefreshing()
+//         }
       }
+    
+ 
     
     // MARK: - Navigation
     
@@ -80,6 +84,32 @@ final class NewsViewController: UITableViewController {
         cell.configure(item: news[indexPath.row], dateFormatter: dateFormatter)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastRow = indexPath.row
+        if lastRow == news.count - 1 {
+            fetchData(lastRow)
+        }
+    }
+    
+    private func fetchData(_ lastRow: Int){
+        
+
+            self.service.getUserNewsFeed({(newsIn) in
+                
+                if self.news.count > 30 {
+                    self.news = self.news.suffix(20)
+                }
+            self.news.append(contentsOf: newsIn)
+            
+                print(self.news.count)
+                
+                DispatchQueue.main.async { // Correct
+                self.tableView.reloadData()
+                }
+            })
+    
     }
     
     // MARK: - Activiti Indicator

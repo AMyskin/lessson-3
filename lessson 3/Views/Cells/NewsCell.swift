@@ -51,9 +51,8 @@ final class NewsCell: UITableViewCell {
         authorNameLabel.text = item.author
         publishedDateLabel.text = dateFormatter.string(from: item.date)
         newsTextLabel.text = item.newsTest
-        photoImageView.image = item.image[0]
         authorImageView.image = UIImage(named: "1")
-        imageURL = item.imageUrl
+        imageURL = item.imageUrl?[0]
         avatarURL = item.avatarUrl
         countOfViewLabel.text = getStringOfCount(item.countOfViews)
         countOfLikeLabel.text = getStringOfCount(item.countOfLike)
