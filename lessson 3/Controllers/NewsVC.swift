@@ -9,12 +9,12 @@
 import UIKit
 
 class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NewsDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
-
+    
     lazy var dateFormatter: DateFormatter = {
-         let dateFormatter = DateFormatter()
-         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
-         return dateFormatter
-     }()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm"
+        return dateFormatter
+    }()
     
     lazy var service = ServiceNetwork()
     
@@ -36,17 +36,17 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
         
         service.getUserWall(friend: friend.id, {[weak self] (news) in
             guard let self = self else {return}
-
+            
             self.newsTest = news
             DispatchQueue.main.async { 
                 self.tableView.reloadData()
-
+                
             }
             print(self.friend ?? "")
             
         })
-          
-
+        
+        
         setupTableView()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Foto", style: .plain, target: self, action: #selector(addTapped))
@@ -57,14 +57,14 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
     
     @objc func addTapped(_ sender: UIButton) {
         
-
+        
         
         guard  let photoVC = PhotosViewController.storyboardInstance() else {return}
         
         photoVC.userId = friend.id
         
         navigationController?.pushViewController(photoVC, animated: true)
-             
+        
         
     }
     
@@ -90,7 +90,7 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       newsTest.count
+        newsTest.count
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -100,10 +100,15 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
         guard let cell = cell as? UserNewsCell else {return}
         cell.setCollectionDelegate(self, for: indexPath.row)
         
+        let lastRow = indexPath.row
+             if lastRow == newsTest.count - 1 {
+                 fetchData(lastRow)
+             }
+        
         
         
     }
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! UserNewsCell
@@ -124,6 +129,27 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
         
         
         return cell
+    }
+    
+    
+    
+    
+    
+    private func fetchData(_ lastRow: Int){
+        
+
+            service.getUserWall(friend: friend.id,{(newsIn) in
+                
+             
+            self.newsTest.append(contentsOf: newsIn)
+            
+                
+                
+                DispatchQueue.main.async {
+                self.tableView.reloadData()
+                }
+            })
+    
     }
     
     
@@ -209,29 +235,29 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
         static let maxPhotos = 4
     }
     
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
- //       guard let cell = cell as? PhotoCollectionViewCell else {return}
-        
-//        cell.alpha = 1
-//
-//        let animation = CABasicAnimation(keyPath: "opacity")
-//        animation.fromValue = 0
-//        animation.toValue = 1
-//        animation.duration = 1
-//        animation.beginTime = CACurrentMediaTime() + 0.1 * Double(indexPath.row)
-//        cell.layer.add(animation, forKey: nil)
-//
-//        let fromValue = CGRect(x: cell.layer.bounds.origin.x, y: cell.layer.bounds.origin.y,   width: cell.layer.bounds.width/3, height: cell.layer.bounds.height/3)
-//        let toValue = CGRect(x: cell.layer.bounds.origin.x, y: cell.layer.bounds.origin.y,   width: cell.layer.bounds.width, height: cell.layer.bounds.height)
-//
-//        let animation2 = CABasicAnimation(keyPath: "bounds")
-//        animation2.fromValue = fromValue
-//        animation2.toValue = toValue
-//        animation2.duration = 0.5
-//        cell.layer.add(animation2, forKey: nil)
-        
-        
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    //       guard let cell = cell as? PhotoCollectionViewCell else {return}
+    
+    //        cell.alpha = 1
+    //
+    //        let animation = CABasicAnimation(keyPath: "opacity")
+    //        animation.fromValue = 0
+    //        animation.toValue = 1
+    //        animation.duration = 1
+    //        animation.beginTime = CACurrentMediaTime() + 0.1 * Double(indexPath.row)
+    //        cell.layer.add(animation, forKey: nil)
+    //
+    //        let fromValue = CGRect(x: cell.layer.bounds.origin.x, y: cell.layer.bounds.origin.y,   width: cell.layer.bounds.width/3, height: cell.layer.bounds.height/3)
+    //        let toValue = CGRect(x: cell.layer.bounds.origin.x, y: cell.layer.bounds.origin.y,   width: cell.layer.bounds.width, height: cell.layer.bounds.height)
+    //
+    //        let animation2 = CABasicAnimation(keyPath: "bounds")
+    //        animation2.fromValue = fromValue
+    //        animation2.toValue = toValue
+    //        animation2.duration = 0.5
+    //        cell.layer.add(animation2, forKey: nil)
+    
+    
+    //    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let imagesCount = newsTest[collectionView.tag].imageUrl?.count else {return 1}
@@ -240,11 +266,11 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotoCollectionViewCell
-      
-       // let newsModel = newsTest[collectionView.tag]
+        
+        // let newsModel = newsTest[collectionView.tag]
         if newsTest[collectionView.tag].imageUrl?.count == 0 {
-    //        let image = newsTest[collectionView.tag].imageUrl
-             return cell
+            //        let image = newsTest[collectionView.tag].imageUrl
+            return cell
             
         }
         cell.photoURL = newsTest[collectionView.tag].imageUrl?[indexPath.row]
@@ -256,21 +282,21 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
             cell.countLabel.text = "+\(count)"
             cell.containerView.isHidden = count == 0
         }
-//        
+        //
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if newsTest[collectionView.tag].imageUrl?.count ?? 1 > 1 {
             return CGSize(
-                      width: collectionView.bounds.width / 2,
-                      height: collectionView.bounds.height / 2
-                  )
+                width: collectionView.bounds.width / 2,
+                height: collectionView.bounds.height / 2
+            )
         } else {
-        return CGSize(
-            width: collectionView.bounds.width ,
-            height: collectionView.bounds.height
-        )
+            return CGSize(
+                width: collectionView.bounds.width ,
+                height: collectionView.bounds.height
+            )
         }
     }
     
@@ -291,7 +317,7 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
         
         
         
-       // collectionPhotoVC.userImage = newsTest[collectionView.tag].image
+        // collectionPhotoVC.userImage = newsTest[collectionView.tag].image
         collectionPhotoVC.userImageUrl = newsTest[collectionView.tag].imageUrl ?? []
         
         selectedCell = selectedcell2

@@ -105,7 +105,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
             self.filteredChars = self.sectionsOfFriends(friends: friends)
             self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: friends)
 
-            print(self.filteredChars)
+           // print(self.filteredChars)
             DispatchQueue.main.async { // Correct
                 self.tableView.reloadData()
                 self.charPicker.delegate = self

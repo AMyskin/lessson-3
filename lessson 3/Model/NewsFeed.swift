@@ -135,7 +135,7 @@ struct VideoElement: Codable {
 // MARK: - Link
 struct Link: Codable {
     let url: String
-    let title, linkDescription, target: String
+    let title, linkDescription, target: String?
     let photo: LinkPhoto
     let isFavorite: Bool
 
@@ -187,36 +187,21 @@ struct AttachmentPhoto: Codable {
 
 // MARK: - AttachmentVideo
 struct AttachmentVideo: Codable {
-    //let accessKey: String
-    let canComment, canLike, canRepost, canSubscribe: Int
-    let canAddToFaves, canAdd, comments, date: Int
+ 
+    let date: Int
     let videoDescription: String
     let duration: Int
     let image: [VideoElement] //,firstFrame: [VideoElement]
-   // let width, height, id, ownerID: Int
     let title: String
-    let isFavorite: Bool
-    let trackCode, type: String
     let views: Int
 
     enum CodingKeys: String, CodingKey {
-        //case accessKey = "access_key"
-        case canComment = "can_comment"
-        case canLike = "can_like"
-        case canRepost = "can_repost"
-        case canSubscribe = "can_subscribe"
-        case canAddToFaves = "can_add_to_faves"
-        case canAdd = "can_add"
-        case comments, date
+    
+        case date
         case videoDescription = "description"
         case duration, image
-       // case firstFrame = "first_frame"
-       // case width, height, id
-       // case ownerID = "owner_id"
         case title
-        case isFavorite = "is_favorite"
-        case trackCode = "track_code"
-        case type, views
+        case views
     }
 }
 

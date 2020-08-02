@@ -36,8 +36,7 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate, UIS
                   DispatchQueue.main.async { // Correct
                            self.tableView.reloadData()
                        }
-               
-                  //print(self.myGroupList.count)
+
                       })
  
     }

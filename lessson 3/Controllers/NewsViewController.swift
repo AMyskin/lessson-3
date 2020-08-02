@@ -98,9 +98,9 @@ final class NewsViewController: UITableViewController {
 
             self.service.getUserNewsFeed({(newsIn) in
                 
-                if self.news.count > 30 {
-                    self.news = self.news.suffix(20)
-                }
+//                if self.news.count > 30 {
+//                    self.news = self.news.suffix(20)
+//                }
             self.news.append(contentsOf: newsIn)
             
                 print(self.news.count)

@@ -123,6 +123,8 @@ enum AttachmentType: String, Codable {
     case doc = "doc"
     case audio = "audio"
     case photos_list = "photos_list"
+    case album = "album"
+    case poll = "poll"
 }
 
 // MARK: - PurpleVideo

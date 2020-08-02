@@ -23,10 +23,7 @@ class ServiceNetwork {
     var nextFromVKNews = ""
     var offsetWall = 0
     
-    
-    
-    
-    
+
     
     func getVkMetod(path: String, queryItem: [URLQueryItem],_ callback: @escaping ( (Data) -> Void) ){
         
@@ -58,7 +55,7 @@ class ServiceNetwork {
     
     
     func getFriends(_ completion: @escaping ([FriendData]) -> Void){
-        print(#function)
+        //print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
             URLQueryItem(name: "fields", value: "photo_50"),
@@ -79,7 +76,7 @@ class ServiceNetwork {
     
     
     func getFriendsPhoto(friend: Int,_ completion: @escaping ([String]) -> Void){
-        print(#function)
+        //print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
             URLQueryItem(name: "count", value: "50"),
@@ -89,21 +86,18 @@ class ServiceNetwork {
         getVkMetod(path: "/method/photos.getAll", queryItem: queryArray){jsonData in
             
             do {
-                       let fotos = try JSONDecoder().decode(VKResponseFoto.self, from: jsonData).response
-                        completion(self.convertFoto(response: fotos))
-                   } catch {
-                       print(error)
-                       completion([])
-                   }
-            
-            let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
-            print(json ?? "no json")
+                let fotos = try JSONDecoder().decode(VKResponseFoto.self, from: jsonData).response
+                completion(self.convertFoto(response: fotos))
+            } catch {
+                print(error)
+                completion([])
+            }
             
         }
     }
     
     func getUserWall(friend: Int,_ callback: @escaping ( ([NewsOfUser]) -> Void)){
-        print(#function)
+        //print(#function)
 
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
@@ -255,7 +249,7 @@ class ServiceNetwork {
         var attachmentFotoSizeDicUrl: [String] = []
         
         let news = response.items
-        self.offsetWall += self.offsetWall
+        self.offsetWall += 10
         
         
         news.forEach{(news) in
@@ -370,9 +364,9 @@ class ServiceNetwork {
                 }
             }
             
-            if attachmentFotoSizeDicUrl.count > 0 {
-                print("картинок обнаружено \(attachmentFotoSizeDicUrl.count)")
-            }
+//            if attachmentFotoSizeDicUrl.count > 0 {
+//                print("картинок обнаружено \(attachmentFotoSizeDicUrl.count)")
+//            }
             let tmpNew: NewsOfUser = NewsOfUser(author: "",
                                                 avatarUrl: "",
                                                 imageUrl: attachmentFotoSizeDicUrl,
@@ -395,14 +389,10 @@ class ServiceNetwork {
         
         
         var attachmentFotoSizeDicUrl: [String] = []
-        
         let fotos = response.items
-        
-        
-        
+   
         fotos.forEach{(foto) in
-            
-            
+   
             var photo: String? = nil
             
             let photo2560 =  foto.photo2560
@@ -411,8 +401,7 @@ class ServiceNetwork {
             let photo604 =  foto.photo604
             let photo130 =  foto.photo130
             let photo75 =  foto.photo75
-            
-            
+     
             
             if photo2560 != nil {
                 photo = photo2560
@@ -465,7 +454,7 @@ class ServiceNetwork {
 
     
     func searchGroups( q: String, quantity: Int, _ callback: @escaping ( ([Group]) -> Void)){
-        print(#function)
+ 
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
             URLQueryItem(name: "q", value: q),
@@ -476,17 +465,9 @@ class ServiceNetwork {
             
             guard let myGroup = self.parseGroupJSON(withDate: jsonData) else {return}
                        callback(myGroup)
-            
-            
-            let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
-            
-            print(json ?? "no json")
-            
-            
+
         }
-        
-        
-        
+
     }
     
     

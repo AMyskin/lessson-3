@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A2339D1249E2DC600290688 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D0249E2DC600290688 /* User.swift */; };
 		0A2339D5249E39BA00290688 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D4249E39BA00290688 /* UserCell.swift */; };
 		0A2339D7249E563E00290688 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D6249E563E00290688 /* CollectionViewController.swift */; };
 		0A2339D9249E57B200290688 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D8249E57B200290688 /* UserCollectionViewCell.swift */; };
@@ -85,7 +84,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A2339D0249E2DC600290688 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0A2339D4249E39BA00290688 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		0A2339D6249E563E00290688 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		0A2339D8249E57B200290688 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 		0A2339CF249E2DA800290688 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0A2339D0249E2DC600290688 /* User.swift */,
 				0A74968424ACE9F3008EE3E3 /* NewsOfUser.swift */,
 				0AFE7A7324D5CAC900E03CD6 /* NewsFeed.swift */,
 				0AFE7A7524D5F04D00E03CD6 /* WallUser.swift */,
@@ -196,8 +193,8 @@
 		0A2339EE24A6518C00290688 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0A668DE324929BF800F860CB /* LoginViewController.swift */,
 				0AE68AA624B0E315007647B0 /* CustomActivitiVC.swift */,
+				0A668DE324929BF800F860CB /* LoginViewController.swift */,
 				0A2339EA24A3B43E00290688 /* FriendsVC.swift */,
 				0A74968624ACF6D6008EE3E3 /* NewsVC.swift */,
 				0A2339D6249E563E00290688 /* CollectionViewController.swift */,
@@ -519,7 +516,6 @@
 				0AA27B5B24CB865100AAC4E4 /* NewsCell.swift in Sources */,
 				0AFE7A7224D5C85100E03CD6 /* VKResponseFriends.swift in Sources */,
 				0A6C8ED824B5E9260098E340 /* CustomPopAnimator.swift in Sources */,
-				0A2339D1249E2DC600290688 /* User.swift in Sources */,
 				0AA27B5124CB7AD300AAC4E4 /* NewsViewController.swift in Sources */,
 				0AFE7A8A24D7339F00E03CD6 /* PhotoCell.swift in Sources */,
 				0AFE7A7624D5F04D00E03CD6 /* WallUser.swift in Sources */,

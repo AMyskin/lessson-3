@@ -31,11 +31,7 @@ class CustomActivitiVC: UIViewController {
     }
     
     func tapObserver(){
-        
-        
-  
- 
-        
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(singgleTapAction))
 
         self.view.addGestureRecognizer(tap)

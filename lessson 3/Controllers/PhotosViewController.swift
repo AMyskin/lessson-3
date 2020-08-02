@@ -19,17 +19,14 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.getFriendsPhoto(friend: userId,{[weak self] (fotos) in
+        service.getFriendsPhoto(friend: userId){[weak self] (fotos) in
             guard let self = self else {return}
-
-            self.photosUrl = fotos
-            DispatchQueue.main.async { // Correct
-                self.collectionView.reloadData()
-
-            }
-            print(self.photosUrl)
             
-        })
+            self.photosUrl = fotos
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     // MARK: - Navigation
