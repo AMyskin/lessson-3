@@ -1,11 +1,13 @@
 import Foundation
+import RealmSwift
 
 // MARK: - Friend
-struct FriendData: Codable {
-    let id: Int
-    let firstName, lastName: String
-    let avatar: String
-    let online: Int
+final class FriendData: Object, Codable {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var firstName: String = ""
+    @objc dynamic var lastName: String = ""
+    @objc dynamic var avatar: String = ""
+    @objc dynamic var online: Int = 0
 
 
     enum CodingKeys: String, CodingKey {
@@ -16,7 +18,8 @@ struct FriendData: Codable {
         case online
 
     }
-    init(from decoder: Decoder) throws {
+    convenience init(from decoder: Decoder) throws {
+        self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         

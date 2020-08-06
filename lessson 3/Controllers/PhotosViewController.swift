@@ -23,9 +23,9 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
             guard let self = self else {return}
             
             self.photosUrl = fotos
-            DispatchQueue.main.async {
+            
                 self.collectionView.reloadData()
-            }
+            
         }
     }
     

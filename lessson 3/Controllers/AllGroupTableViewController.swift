@@ -18,7 +18,7 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate, UIS
      lazy var service = ServiceNetwork()
     
     
-    var allGroupList: [Group] = []
+    var allGroupList: [GroupData] = []
                             
 
     
@@ -31,14 +31,13 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate, UIS
         searchBar.delegate = self
         
         
-        service.searchGroups(q: " ", quantity: 50 , {(group) in
-                          self.allGroupList = group
-                  DispatchQueue.main.async { // Correct
-                           self.tableView.reloadData()
-                       }
-
-                      })
- 
+        service.searchGroups(q: " ", quantity: 50 , {[weak self](group) in
+            guard let self = self else {return}
+            self.allGroupList = group
+            DispatchQueue.main.async { // Correct
+                self.tableView.reloadData()
+            }
+        })
     }
     
     

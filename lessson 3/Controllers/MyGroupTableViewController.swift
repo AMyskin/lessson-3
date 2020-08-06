@@ -15,7 +15,7 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
     lazy var service = ServiceNetwork()
     
-    var myGroupList: [Group] = []
+    var myGroupList: [GroupData] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +30,15 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-         service.getMyGroups(group: "test", {(group) in
-                    self.myGroupList = group
+        service.getMyGroups(group: "test", {[weak self](group) in
+            guard let self = self else {return}
+            self.myGroupList = group
             DispatchQueue.main.async { // Correct
-                     self.tableView.reloadData()
-                 }
-         
-            //print(self.myGroupList.count)
-                })
-                    
+                self.tableView.reloadData()
+            }
+            
+        })
+        
         
     }
     

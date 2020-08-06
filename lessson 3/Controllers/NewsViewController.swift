@@ -49,14 +49,15 @@ final class NewsViewController: UITableViewController {
     
     func getUserFeed(){
         
-        service.getUserNewsFeed(newQuery : true,{(newsIn) in
-             self.news = newsIn
-             DispatchQueue.main.async { // Correct
-                 self.tableView.reloadData()
+        service.getUserNewsFeed(newQuery : true){[weak self](newsIn) in
+            guard let self = self else {return}
+            self.news = newsIn
+            
+                self.tableView.reloadData()
                 self.removeLoadingScreen()
                 self.refreshControl?.endRefreshing()
-             }
-         })
+            
+        }
     }
     
     @objc func handleRefreshControl() {
@@ -105,9 +106,9 @@ final class NewsViewController: UITableViewController {
             
                 print(self.news.count)
                 
-                DispatchQueue.main.async { // Correct
+                
                 self.tableView.reloadData()
-                }
+               
             })
     
     }

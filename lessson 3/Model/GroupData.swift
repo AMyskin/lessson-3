@@ -7,23 +7,19 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct GroupData: Decodable, Equatable {
-    let id: Int
-    let name: String
-    let screenName: String
-    var avatar: String?
+class GroupData: Object, Decodable {
+    @objc dynamic var id: Int
+    @objc dynamic var name: String
+    @objc dynamic var screenName: String
+    @objc dynamic var imageUrl: String?
     
      enum CodingKeys: String, CodingKey {
         case id, name
         case screenName = "screen_name"
-        case avatar = "photo_50"
+        case imageUrl = "photo_50"
     }
     
-    static func == (lhs: GroupData, rhs: GroupData) -> Bool {
-        return lhs.name == rhs.name &&
-            lhs.id == rhs.id &&
-            lhs.screenName == rhs.screenName &&
-            lhs.avatar == rhs.avatar
-    }
+
 }

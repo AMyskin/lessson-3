@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 //import Alamofire
 
 enum AttachmentEnum: String {
@@ -23,7 +24,7 @@ class ServiceNetwork {
     var nextFromVKNews = ""
     var offsetWall = 0
     
-
+    
     
     func getVkMetod(path: String, queryItem: [URLQueryItem],_ callback: @escaping ( (Data) -> Void) ){
         
@@ -31,8 +32,7 @@ class ServiceNetwork {
         components.scheme = "https"
         components.host = "api.vk.com"
         components.path = path
-        components.queryItems =
-        queryItem
+        components.queryItems = queryItem
         
         
         guard let url = components.url else { return }
@@ -61,11 +61,14 @@ class ServiceNetwork {
             URLQueryItem(name: "fields", value: "photo_50"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
-        getVkMetod(path: "/method/friends.get", queryItem: queryArray){ jsonData in
+        getVkMetod(path: "/method/friends.get", queryItem: queryArray){[weak self] jsonData in
             
             do {
-                let friends = try JSONDecoder().decode(VKResponseFriends.self, from: jsonData).response.items
-                completion(friends)
+                let response = try JSONDecoder().decode(VKResponse<FriendData>.self, from: jsonData)
+                DispatchQueue.main.async {
+                    completion(response.items)
+                    self?.saveFriensToRealm(response.items)
+                }
             } catch {
                 print(error)
                 completion([])
@@ -73,6 +76,7 @@ class ServiceNetwork {
         }
         
     }
+    
     
     
     func getFriendsPhoto(friend: Int,_ completion: @escaping ([String]) -> Void){
@@ -86,8 +90,11 @@ class ServiceNetwork {
         getVkMetod(path: "/method/photos.getAll", queryItem: queryArray){jsonData in
             
             do {
-                let fotos = try JSONDecoder().decode(VKResponseFoto.self, from: jsonData).response
-                completion(self.convertFoto(response: fotos))
+                
+                let fotos = try JSONDecoder().decode(VKResponse<FotoData>.self, from: jsonData).items
+                DispatchQueue.main.async {
+                    completion(self.convertFoto(response: fotos))
+                }
             } catch {
                 print(error)
                 completion([])
@@ -98,7 +105,7 @@ class ServiceNetwork {
     
     func getUserWall(friend: Int,_ callback: @escaping ( ([NewsOfUser]) -> Void)){
         //print(#function)
-
+        
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
             URLQueryItem(name: "count", value: "10"),
@@ -107,26 +114,29 @@ class ServiceNetwork {
             URLQueryItem(name: "access_token", value: session.token)
         ]
         getVkMetod(path: "/method/wall.get", queryItem: queryArray){[weak self] jsonData in
-           guard let self = self else {return}
+            guard let self = self else {return}
             
             do {
-                 let response = try JSONDecoder().decode(VKResponseWall.self, from: jsonData).response
-                 callback(self.convertWall(response: response))
-             } catch {
-                 print(error)
-                 callback([])
-             }
+                
+                let response = try JSONDecoder().decode(VKResponse<WallUserElement>.self, from: jsonData).items
+                DispatchQueue.main.async {
+                    callback(self.convertWall(response: response))
+                }
+            } catch {
+                print(error)
+                callback([])
+            }
             
             
             
-//            let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
-//
-//            print(json ?? "no json")
+            //            let json = try? JSONSerialization.jsonObject(with: jsonData, options: [])
+            //
+            //            print(json ?? "no json")
             
             
         }
         
-
+        
         
     }
     
@@ -147,8 +157,11 @@ class ServiceNetwork {
             guard let self = self else {return}
             
             do {
-                let response = try JSONDecoder().decode(VKResponseNews.self, from: jsonData).response
-                callback(self.convertNew(response: response))
+                let response = try JSONDecoder().decode(VKResponse<NewsFeedElement>.self, from: jsonData)
+                DispatchQueue.main.async {
+                    
+                    callback(self.convertNew(response: response))
+                }
             } catch {
                 print(error)
                 callback([])
@@ -158,7 +171,7 @@ class ServiceNetwork {
         
     }
     
-    func convertNew(response : ItemOfNews) -> [NewsOfUser]{
+    func convertNew(response : VKResponse<NewsFeedElement>) -> [NewsOfUser]{
         
         var tmpNews: [NewsOfUser] = []
         var author = ""
@@ -166,9 +179,9 @@ class ServiceNetwork {
         var attachmentFotoSizeDicUrl: String = ""
         
         let news = response.items
-        let profiles = response.profiles
-        let group = response.groups
-        let nextFrom = response.nextFrom
+        guard let profiles = response.profiles,
+        let group = response.groups,
+        let nextFrom = response.nextFrom else {return []}
         self.nextFromVKNews = nextFrom
         
         
@@ -179,7 +192,7 @@ class ServiceNetwork {
             print(tmpGroup)
             if tmpGroup.count > 0 {
                 author = tmpGroup[0].name
-                if let avatar = tmpGroup[0].avatar {
+                if let avatar = tmpGroup[0].imageUrl {
                     avatarUrl = avatar
                 }
             } else {
@@ -242,17 +255,17 @@ class ServiceNetwork {
         return tmpNews
     }
     
-    func convertWall(response : ItemOfWall) -> [NewsOfUser]{
+    func convertWall(response : [WallUserElement]) -> [NewsOfUser]{
         
         var tmpNews: [NewsOfUser] = []
-    
+        
         var attachmentFotoSizeDicUrl: [String] = []
         
-        let news = response.items
+        
         self.offsetWall += 10
         
         
-        news.forEach{(news) in
+        response.forEach{(news) in
             
             //  author = news.ownerID
             //  avatarUrl = avatar
@@ -290,13 +303,13 @@ class ServiceNetwork {
                             
                         } else if photo807 != nil {
                             photo = photo807
-                          
+                            
                         } else if photo604 != nil {
                             photo = photo604
-                          
+                            
                         } else if photo130 != nil {
                             photo = photo130
-                           
+                            
                         } else {
                             photo = photo75
                         }
@@ -315,7 +328,7 @@ class ServiceNetwork {
                         
                         if video1280 != nil {
                             photo = video1280
-                           
+                            
                         } else if video800 != nil {
                             photo = video800
                             
@@ -324,49 +337,49 @@ class ServiceNetwork {
                             
                         } else if video320 != nil {
                             photo =  video320
-                           
+                            
                         } else {
                             photo =  video130
                         }
                         
                         if let photo = photo {
-                              attachmentFotoSizeDicUrl.append(photo)
-                          }
+                            attachmentFotoSizeDicUrl.append(photo)
+                        }
                         
                         
                     }
                     if attachment.type.rawValue == AttachmentEnum.link.rawValue{
-                         let link1280  = attachment.photo?.photo1280
-    
-                         let link604  = attachment.photo?.photo604
-                     
-                         let link130  = attachment.photo?.photo130
-                         
-                         var photo: String? = nil
-                         
-                         if link1280 != nil {
-                             photo = link1280
+                        let link1280  = attachment.photo?.photo1280
+                        
+                        let link604  = attachment.photo?.photo604
+                        
+                        let link130  = attachment.photo?.photo130
+                        
+                        var photo: String? = nil
+                        
+                        if link1280 != nil {
+                            photo = link1280
                             
-                         } else if link604 != nil {
-                             photo =  link604
-                             
-                         }  else {
-                             photo =  link130
-                         }
-                         
-                         if let photo = photo {
-                               attachmentFotoSizeDicUrl.append(photo)
-                           }
-                         
-                         
-                     }
+                        } else if link604 != nil {
+                            photo =  link604
+                            
+                        }  else {
+                            photo =  link130
+                        }
+                        
+                        if let photo = photo {
+                            attachmentFotoSizeDicUrl.append(photo)
+                        }
+                        
+                        
+                    }
                     
                 }
             }
             
-//            if attachmentFotoSizeDicUrl.count > 0 {
-//                print("картинок обнаружено \(attachmentFotoSizeDicUrl.count)")
-//            }
+            //            if attachmentFotoSizeDicUrl.count > 0 {
+            //                print("картинок обнаружено \(attachmentFotoSizeDicUrl.count)")
+            //            }
             let tmpNew: NewsOfUser = NewsOfUser(author: "",
                                                 avatarUrl: "",
                                                 imageUrl: attachmentFotoSizeDicUrl,
@@ -380,19 +393,19 @@ class ServiceNetwork {
             tmpNews.append(tmpNew)
         }
         
+        
+        return tmpNews
+    }
     
-    return tmpNews
-}
-
     
-    func convertFoto(response : ItemOfFoto) -> [String]{
+    func convertFoto(response : [FotoData]) -> [String]{
         
         
         var attachmentFotoSizeDicUrl: [String] = []
-        let fotos = response.items
-   
-        fotos.forEach{(foto) in
-   
+        
+        
+        response.forEach{(foto) in
+            
             var photo: String? = nil
             
             let photo2560 =  foto.photo2560
@@ -401,7 +414,7 @@ class ServiceNetwork {
             let photo604 =  foto.photo604
             let photo130 =  foto.photo130
             let photo75 =  foto.photo75
-     
+            
             
             if photo2560 != nil {
                 photo = photo2560
@@ -429,86 +442,98 @@ class ServiceNetwork {
         
         return attachmentFotoSizeDicUrl
     }
-
     
     
-    func getMyGroups(group: String, _ callback: @escaping ( ([Group]) -> Void)){
+    
+    func getMyGroups(group: String, _ callback: @escaping ( ([GroupData]) -> Void)){
         print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
             URLQueryItem(name: "extended", value: "1"),
             URLQueryItem(name: "access_token", value: session.token)
         ]
-        getVkMetod(path: "/method/groups.get", queryItem: queryArray){jsonData in
-            
-            guard let myGroup = self.parseGroupJSON(withDate: jsonData) else {return}
-            callback(myGroup)
-            
-            
-        }
 
-
+        
+        getVkMetod(path: "/method/groups.get", queryItem: queryArray){[weak self] jsonData in
+            guard let self = self else {return}
+            
+            do {
+                
+                let response = try JSONDecoder().decode(VKResponse<GroupData>.self, from: jsonData).items
+                DispatchQueue.main.async {
+                    callback(response)
+                    self.saveGroupsToRealm(response)
+                }
+            } catch {
+                print(error)
+                callback([])
+            }
+            
+            
+         }
+        
+        
         
     }
     
-
     
-    func searchGroups( q: String, quantity: Int, _ callback: @escaping ( ([Group]) -> Void)){
- 
+    
+    func searchGroups( q: String, quantity: Int, _ callback: @escaping ( ([GroupData]) -> Void)){
+        
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
             URLQueryItem(name: "q", value: q),
             URLQueryItem(name: "count", value: String(quantity)),
             URLQueryItem(name: "access_token", value: session.token)
         ]
+
         getVkMetod(path: "/method/groups.search", queryItem: queryArray){jsonData in
             
-            guard let myGroup = self.parseGroupJSON(withDate: jsonData) else {return}
-                       callback(myGroup)
-
-        }
-
-    }
-    
-    
-    func parseGroupJSON(withDate data: Data) -> [Group]?{
-        
-        var tmpGroups: [Group] = []
-        let json = try? JSONSerialization.jsonObject(with: data, options: [])
-        if let dictionary = json as? [String: Any] {
-            
-            if let response = dictionary["response"] as? NSDictionary {
+               
+               do {
                 
-                if let items = response["items"] as? NSArray {
-                    for item in items {
-                        
-                        let testUser = item as! NSDictionary
-                        
-                        guard  let name = testUser["name"] as? String,
-                            let screenName = testUser["screen_name"] as? String,
-                            let photo50 = testUser["photo_50"] as? String
-                            
-                            else {return nil}
-                        
-                        
-                        
-                        let tmpGroup: Group = Group(name: name, imageUrl: photo50)
-                        print ("\(name) \(screenName)")
-                        
-                        tmpGroups.append(tmpGroup)
-                        
-                    }
+                let response = try JSONDecoder().decode(VKResponse<GroupData>.self, from: jsonData).items
+                DispatchQueue.main.async {
+                    callback(response)
+                    
                     
                 }
-            }
-        }
-        
-        
-        
-        return tmpGroups
+               } catch {
+                   print(error)
+                   callback([])
+               }
+   
+               
+           }
         
     }
     
+    
 
+    // MARK: Realm
+    
+    func saveFriensToRealm(_ friends: [FriendData]) {
+        do{
+            let realm = try Realm()
+            try realm.write{
+                realm.add(friends)
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
+    func saveGroupsToRealm(_ groups: [GroupData]) {
+        do{
+            let realm = try Realm()
+            try realm.write{
+                realm.add(groups)
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
+    
     
 }
