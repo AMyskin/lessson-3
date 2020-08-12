@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
@@ -19,28 +20,45 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 60
+        tableView.rowHeight = 60
+        
+        loadFromCache()
+        tableView.reloadData()
+        
+        loadFromNetwork()
         
  
-   
         
-         
-      //  service.getMyGroupsAlamofire()
-
+        
+        
+        //  service.getMyGroupsAlamofire()
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        service.getMyGroups(group: "test", {[weak self](group) in
-            guard let self = self else {return}
-            self.myGroupList = group
-            DispatchQueue.main.async { // Correct
-                self.tableView.reloadData()
-            }
-            
-        })
+    func loadFromCache() {
         
+        do{
+            let realm = try Realm()
+            let group = realm.objects(GroupData.self)
+            self.myGroupList = Array(group)
+            
+        }catch{
+            print(error)
+        }
         
     }
+    
+    func loadFromNetwork() {
+        service.getMyGroups(group: "test", {[weak self](group) in
+             guard let self = self else {return}
+             self.myGroupList = group
+             
+             self.tableView.reloadData()
+             
+             
+         })
+    }
+
     
   
     

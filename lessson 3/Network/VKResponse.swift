@@ -32,11 +32,11 @@ struct VKResponse<T: Decodable>: Decodable {
         
         self.items = try container.decode([T].self, forKey: .items)
         
-        self.profiles = try? container.decode([Profiles].self, forKey: .profiles)
+        self.profiles = try? container.decodeIfPresent([Profiles].self, forKey: .profiles)
 
-        self.groups = try? container.decode([GroupData].self, forKey: .groups)
+        self.groups = try? container.decodeIfPresent([GroupData].self, forKey: .groups) //container.decode([GroupData].self, forKey: .groups)
 
-        self.nextFrom = try? container.decode(String.self, forKey: .nextFrom)
+        self.nextFrom = try? container.decodeIfPresent(String.self, forKey: .nextFrom)
         
     }
 

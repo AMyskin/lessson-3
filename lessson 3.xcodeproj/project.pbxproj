@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A06777324E316D10054F274 /* Foto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A06777224E316D10054F274 /* Foto.swift */; };
 		0A2339D5249E39BA00290688 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D4249E39BA00290688 /* UserCell.swift */; };
 		0A2339D7249E563E00290688 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D6249E563E00290688 /* CollectionViewController.swift */; };
 		0A2339D9249E57B200290688 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D8249E57B200290688 /* UserCollectionViewCell.swift */; };
@@ -80,6 +81,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A06777224E316D10054F274 /* Foto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foto.swift; sourceTree = "<group>"; };
 		0A2339D4249E39BA00290688 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		0A2339D6249E563E00290688 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		0A2339D8249E57B200290688 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				0A9C922B24D19B8100374903 /* Profiles.swift */,
 				0AFE7A6F24D5C44200E03CD6 /* GroupData.swift */,
 				0AFE7A8324D72E9700E03CD6 /* FotoData.swift */,
+				0A06777224E316D10054F274 /* Foto.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				0AFE7A8224D727C000E03CD6 /* UIScrollViewExtension.swift in Sources */,
 				0A6C8EDC24B647400098E340 /* CustomInteractiveTransition.swift in Sources */,
 				0A62E0C824B206CE005D8CE1 /* SwipeVC.swift in Sources */,
+				0A06777324E316D10054F274 /* Foto.swift in Sources */,
 				0A6C8EDF24B6515B0098E340 /* PopAnimator.swift in Sources */,
 				0A2339E1249E901600290688 /* GroupCell.swift in Sources */,
 				0AFDB0A624C2352000A1BEF0 /* ZoomAnimator.swift in Sources */,

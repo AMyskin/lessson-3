@@ -38,11 +38,11 @@ class NewsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, News
             guard let self = self else {return}
             
             self.newsTest = news
-            DispatchQueue.main.async { 
-                self.tableView.reloadData()
+          
+            self.tableView.reloadData()
                 
-            }
-            print(self.friend ?? "")
+            
+           // print(self.friend ?? "")
             
         })
         

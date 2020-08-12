@@ -40,9 +40,9 @@ class ServiceNetwork {
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data , responce , eror in
             if let data = data{
-                
+               DispatchQueue.main.async {
                 callback(data)
-                
+                }
             }
             if let eror = eror {
                 
@@ -65,10 +65,10 @@ class ServiceNetwork {
             
             do {
                 let response = try JSONDecoder().decode(VKResponse<FriendData>.self, from: jsonData)
-                DispatchQueue.main.async {
+              
                     completion(response.items)
                     self?.saveFriensToRealm(response.items)
-                }
+                
             } catch {
                 print(error)
                 completion([])
@@ -79,7 +79,7 @@ class ServiceNetwork {
     
     
     
-    func getFriendsPhoto(friend: Int,_ completion: @escaping ([String]) -> Void){
+    func getFriendsPhoto(friend: Int,_ completion: @escaping ([Foto]) -> Void){
         //print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
@@ -92,9 +92,12 @@ class ServiceNetwork {
             do {
                 
                 let fotos = try JSONDecoder().decode(VKResponse<FotoData>.self, from: jsonData).items
-                DispatchQueue.main.async {
-                    completion(self.convertFoto(response: fotos))
-                }
+                
+                    let tmpFoto = self.convertFoto(forFriend: friend, response: fotos)
+                    completion(tmpFoto)
+                    self.saveFotoToRealm(tmpFoto, friendId: friend)
+         
+                
             } catch {
                 print(error)
                 completion([])
@@ -119,9 +122,9 @@ class ServiceNetwork {
             do {
                 
                 let response = try JSONDecoder().decode(VKResponse<WallUserElement>.self, from: jsonData).items
-                DispatchQueue.main.async {
+                
                     callback(self.convertWall(response: response))
-                }
+                
             } catch {
                 print(error)
                 callback([])
@@ -158,10 +161,10 @@ class ServiceNetwork {
             
             do {
                 let response = try JSONDecoder().decode(VKResponse<NewsFeedElement>.self, from: jsonData)
-                DispatchQueue.main.async {
+              
                     
                     callback(self.convertNew(response: response))
-                }
+                
             } catch {
                 print(error)
                 callback([])
@@ -189,7 +192,7 @@ class ServiceNetwork {
             let tmpGroup = group.filter{ $0.id == -news.sourceID}
             let tmpProfile = profiles.filter{ $0.id == news.sourceID}
             
-            print(tmpGroup)
+           // print(tmpGroup)
             if tmpGroup.count > 0 {
                 author = tmpGroup[0].name
                 if let avatar = tmpGroup[0].imageUrl {
@@ -398,10 +401,10 @@ class ServiceNetwork {
     }
     
     
-    func convertFoto(response : [FotoData]) -> [String]{
+    func convertFoto(forFriend id: Int, response : [FotoData]) -> [Foto]{
         
         
-        var attachmentFotoSizeDicUrl: [String] = []
+        var attachmentFotoSizeDicUrl: [Foto] = []
         
         
         response.forEach{(foto) in
@@ -435,10 +438,16 @@ class ServiceNetwork {
                 photo = photo75
             }
             if let photo = photo {
-                attachmentFotoSizeDicUrl.append(photo)
+                
+                let tmpFotos = Foto()
+                tmpFotos.friendId = id
+                tmpFotos.photosUrl = photo
+                
+                attachmentFotoSizeDicUrl.append(tmpFotos)
             }
         }
         
+
         
         return attachmentFotoSizeDicUrl
     }
@@ -460,10 +469,10 @@ class ServiceNetwork {
             do {
                 
                 let response = try JSONDecoder().decode(VKResponse<GroupData>.self, from: jsonData).items
-                DispatchQueue.main.async {
+                
                     callback(response)
                     self.saveGroupsToRealm(response)
-                }
+                
             } catch {
                 print(error)
                 callback([])
@@ -493,11 +502,11 @@ class ServiceNetwork {
                do {
                 
                 let response = try JSONDecoder().decode(VKResponse<GroupData>.self, from: jsonData).items
-                DispatchQueue.main.async {
+               
                     callback(response)
                     
                     
-                }
+                
                } catch {
                    print(error)
                    callback([])
@@ -515,7 +524,9 @@ class ServiceNetwork {
     func saveFriensToRealm(_ friends: [FriendData]) {
         do{
             let realm = try Realm()
+            let oldObjects = realm.objects(FriendData.self)
             try realm.write{
+                realm.delete(oldObjects)
                 realm.add(friends)
             }
         }catch{
@@ -526,8 +537,25 @@ class ServiceNetwork {
     func saveGroupsToRealm(_ groups: [GroupData]) {
         do{
             let realm = try Realm()
+            let oldObjects = realm.objects(GroupData.self)
             try realm.write{
+                realm.delete(oldObjects)
                 realm.add(groups)
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
+    func saveFotoToRealm(_ objects: [Foto], friendId: Int) {
+        do{
+            let realm = try Realm()
+            let oldObjects = realm.objects(Foto.self)
+                   .filter("friendId == %@", friendId)
+            
+            try realm.write{
+                realm.delete(oldObjects)
+                realm.add(objects)
             }
         }catch{
             print(error)

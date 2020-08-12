@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CharDelegate, CustomSearchViewDelegate {
-
-
-  
+    
+    
+    
     @IBOutlet weak var customSearchBar: CustomSearchView!
     
     lazy var service = ServiceNetwork()
@@ -24,9 +25,9 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-  //  var userList = User.arrayOfFriends
+    //  var userList = User.arrayOfFriends
     
-  //  var chars = User.sectionsOfFriends
+    //  var chars = User.sectionsOfFriends
     
     
     
@@ -41,7 +42,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     var char: String = ""
     
     func charPushed(char letter: String) {
-
+        
         
         guard let section = filteredChars.firstIndex(of: letter) else { return }
         tableView.scrollToRow(at: IndexPath(row: 0, section: section),
@@ -57,10 +58,10 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     @IBOutlet weak var tableView: UITableView!
     
     
-//    static func storyboardInstance() -> FriendsVC? {
-//             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//             return storyboard.instantiateViewController(withIdentifier: "FriendsVC") as? FriendsVC
-//         }
+    //    static func storyboardInstance() -> FriendsVC? {
+    //             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //             return storyboard.instantiateViewController(withIdentifier: "FriendsVC") as? FriendsVC
+    //         }
     
     
     func sectionsOfFriends(friends: [FriendData]) -> Array<String>{
@@ -89,41 +90,24 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     
-
-       
-
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.rowHeight = 44
+        tableView.rowHeight = 44
         
         
-        
-        service.getFriends({[weak self] (friends) in
-            guard let self = self else {return}
-            self.friends = friends
-            self.filteredChars = self.sectionsOfFriends(friends: friends)
-            self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: friends)
-
-           // print(self.filteredChars)
-            //DispatchQueue.main.async { // Correct
-                self.tableView.reloadData()
-                self.charPicker.delegate = self
-                self.charPicker.chars =  self.filteredChars
-                
-            //}
-        })
-        
-        
-        //service.getFriendsPhoto()
-        
-        
-       
-   
-     
-        //customSearchBar.delegate = self
-        //charPicker.delegate = self
-        //charPicker.chars = filteredChars
+        // Загрузка из realm
+        loadFromCache()
+        filteredChars = sectionsOfFriends(friends: friends)
+        friendsWithSection = arrayOfFriends(sections: filteredChars , friens: friends)
+        tableView.reloadData()
+        charPicker.delegate = self
+        charPicker.chars =  filteredChars
+        // Загрузка из сети
+        loadFromNetwork()
         
         
         
@@ -144,10 +128,38 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     
+    func loadFromCache() {
+        
+        do{
+            let realm = try Realm()
+            let friends = realm.objects(FriendData.self)
+            self.friends = Array(friends)
+            
+        }catch{
+            print(error)
+        }
+ 
+    }
     
-   
+    func loadFromNetwork() {
+        service.getFriends({[weak self] (friends) in
+            guard let self = self else {return}
+            self.friends = friends
+            self.filteredChars = self.sectionsOfFriends(friends: friends)
+            self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: friends)
+            
+            
+            self.tableView.reloadData()
+            self.charPicker.delegate = self
+            self.charPicker.chars =  self.filteredChars
+            
+        })
+    }
     
-
+    
+    
+    
+    
     
     private func setupTableView() {
         tableView.register(UINib(nibName: "FreindsCell", bundle: nil), forCellReuseIdentifier: "Cell")
@@ -155,33 +167,33 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         tableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "FriendsHeaderCell")
     }
     
-  
     
-
- 
+    
+    
+    
     
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-//        if isFiltering {
-//            return filteredChars.count
-//        }
+        //        if isFiltering {
+        //            return filteredChars.count
+        //        }
         
         return filteredChars.count
         
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-            
-            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "FriendsHeaderCell") as! FriendsHeaderCell
+        
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "FriendsHeaderCell") as! FriendsHeaderCell
         
         
         
-            
+        
         headerView.headerTitle.text = filteredChars[section]
         
-    
+        
         
         
         let color: UIColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 0.5)
@@ -191,13 +203,13 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         return headerView
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-          return 40
+        return 40
     }
     
     
-
     
-  
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
@@ -223,7 +235,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         
         
         cell.configure(friend: user)
-       // cell.name.text = "\(user.firstName) \(user.lastName)"
+        // cell.name.text = "\(user.firstName) \(user.lastName)"
         //cell.avatarView.avatarImage = user.avatar
         //cell.avatarButton.setImage(user.avatar, for: .normal)
         
@@ -233,7 +245,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         
         //cell.delegate = self
         
-
+        
         
         
         
@@ -241,13 +253,13 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-    let testVC = NewsVC.storyboardInstance()
+        let testVC = NewsVC.storyboardInstance()
         
         if isFiltering {
             //testVC?.userImage = filteredUsersWithSection[indexPath.section][indexPath.row].image
-           // testVC?.userNews = filteredUsersWithSection[indexPath.section][indexPath.row].newsTest
+            // testVC?.userNews = filteredUsersWithSection[indexPath.section][indexPath.row].newsTest
             testVC?.friend = filteredUsersWithSection[indexPath.section][indexPath.row]
         } else {
             //testVC?.userImage = userList[indexPath.section][indexPath.row].image
@@ -256,11 +268,11 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         }
         navigationController?.pushViewController(testVC!, animated: true)
         
-   
+        
     }
     
     
-
+    
     
     func letterPicked(_ letter: String) {
         guard let section = filteredChars.firstIndex(of: letter) else { return }
@@ -270,20 +282,20 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     
-
+    
     
     func CustomSearch(chars: String) {
         
         if chars.count > 0 {
             filterContentForSearchText(chars)
-                  searchController.isActive = true
-                  searchController.searchBar.text = (chars)
-    
+            searchController.isActive = true
+            searchController.searchBar.text = (chars)
+            
         } else {
             searchController.isActive = false
             searchController.searchBar.text = nil
         }
-      
+        
     }
     
     
@@ -298,30 +310,30 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     
     
     @IBAction func passData() {
-          let storyboard = UIStoryboard(name: "Main", bundle: nil)
-          guard let secondViewController = storyboard.instantiateViewController(identifier: "NewsVC") as? NewsVC else { return }
-       
-          
-          show(secondViewController, sender: nil)
-      }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let secondViewController = storyboard.instantiateViewController(identifier: "NewsVC") as? NewsVC else { return }
+        
+        
+        show(secondViewController, sender: nil)
+    }
     
     
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard segue.identifier == "userSeque" else { return }
-//        guard let destination = segue.destination as? CollectionViewController else { return }
-//        guard let tableSection = tableView.indexPathForSelectedRow?.section else {return}
-//        guard let tableRow = tableView.indexPathForSelectedRow?.row else {return}
-//
-//
-//
-//        if isFiltering {
-//            destination.userImage = filteredUsersWithSection[tableSection][tableRow].image
-//        } else {
-//            destination.userImage = userList[tableSection][tableRow].image
-//        }
-//
-//    }
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //        guard segue.identifier == "userSeque" else { return }
+    //        guard let destination = segue.destination as? CollectionViewController else { return }
+    //        guard let tableSection = tableView.indexPathForSelectedRow?.section else {return}
+    //        guard let tableRow = tableView.indexPathForSelectedRow?.row else {return}
+    //
+    //
+    //
+    //        if isFiltering {
+    //            destination.userImage = filteredUsersWithSection[tableSection][tableRow].image
+    //        } else {
+    //            destination.userImage = userList[tableSection][tableRow].image
+    //        }
+    //
+    //    }
     
     func filterContentForSearchText(_ searchText: String) {
         
@@ -403,7 +415,7 @@ extension UIView{
         gradientLayer.frame = self.bounds
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0)
-       //print(gradientLayer.frame)
+        //print(gradientLayer.frame)
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
 }

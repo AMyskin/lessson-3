@@ -505,58 +505,10 @@
             filePath = "lessson 3/Controllers/MyGroupTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "13AA4DA2-69B5-4C9D-A3B7-18C76C09C8C1"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "lessson 3/Controllers/MyGroupTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "13AA4DA2-69B5-4C9D-A3B7-18C76C09C8C1 - 48679c3d47f55be6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Amyskin.MyGroupTableViewController.viewWillAppear(Swift.Bool) -&gt; ()"
-                  moduleName = "Amyskin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alexandermyskin/Desktop/SwiftLessons/geekbrains/unit3/lessson%203/lessson%203/Controllers/MyGroupTableViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33"
-                  offsetFromSymbolStart = "34">
-               </Location>
-               <Location
-                  uuid = "13AA4DA2-69B5-4C9D-A3B7-18C76C09C8C1 - 2a2f72efb6c6d923"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Array&lt;Amyskin.Group&gt;) -&gt; () in Amyskin.MyGroupTableViewController.viewWillAppear(Swift.Bool) -&gt; ()"
-                  moduleName = "Amyskin"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alexandermyskin/Desktop/SwiftLessons/geekbrains/unit3/lessson%203/lessson%203/Controllers/MyGroupTableViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
-                  offsetFromSymbolStart = "154">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -729,8 +681,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "getUserNewsFeed(newQuery:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -745,8 +697,8 @@
             filePath = "lessson 3/Controllers/FriendsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "sectionsOfFriends(friends:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -761,8 +713,8 @@
             filePath = "lessson 3/Controllers/FriendsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "arrayOfFriends(sections:friens:)"
             landmarkType = "7">
             <Locations>
@@ -809,8 +761,8 @@
             filePath = "lessson 3/Controllers/FriendsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "arrayOfFriends(sections:friens:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -825,8 +777,8 @@
             filePath = "lessson 3/Controllers/FriendsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
@@ -873,8 +825,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "getUserWall(friend:_:)"
             landmarkType = "7">
             <Locations>
@@ -937,8 +889,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "getUserNewsFeed(newQuery:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -953,8 +905,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "getUserWall(friend:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -969,8 +921,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "getUserWall(friend:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1017,8 +969,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1033,8 +985,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1049,8 +1001,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "381"
-            endingLineNumber = "381"
+            startingLineNumber = "384"
+            endingLineNumber = "384"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1081,8 +1033,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1097,8 +1049,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "377"
-            endingLineNumber = "377"
+            startingLineNumber = "380"
+            endingLineNumber = "380"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1154,22 +1106,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "98ED7855-9C89-448E-AAE3-03D574AE64C2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "lessson 3/Controllers/AllGroupTableViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "AC64A8CA-84EB-4054-9B99-B49B0D40A1D4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1209,8 +1145,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1289,8 +1225,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "convertNew(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1307,6 +1243,54 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "34"
             endingLineNumber = "34"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CED08C4C-C8A7-45F8-A6B4-5269D45A958F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Controllers/FriendsVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "loadFromCache()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "35283B36-9B87-44F1-AAAC-B0834DECE086"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Network/VKResponse.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "init(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "146E5FBD-5A13-47F9-8A63-317CE3CA1304"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lessson 3/Network/VKResponse.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
             landmarkName = "init(from:)"
             landmarkType = "7">
          </BreakpointContent>

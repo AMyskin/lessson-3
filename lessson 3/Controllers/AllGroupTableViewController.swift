@@ -29,32 +29,35 @@ class AllGroupTableViewController: UITableViewController, GroupCellDelegate, UIS
         super.viewDidLoad()
         self.tableView.rowHeight = 60
         searchBar.delegate = self
+        searchGroups()
         
-        
-        service.searchGroups(q: " ", quantity: 50 , {[weak self](group) in
-            guard let self = self else {return}
-            self.allGroupList = group
-            DispatchQueue.main.async { // Correct
-                self.tableView.reloadData()
-            }
-        })
+   
+    }
+    
+    func searchGroups(_ text: String = "Swift") {
+        service.searchGroups(q: text, quantity: 50 , {[weak self](group) in
+               guard let self = self else {return}
+               self.allGroupList = group
+               
+               self.tableView.reloadData()
+               
+           })
     }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let search = searchText == "" ? " ": searchText
-        
-        
-        service.searchGroups(q: search, quantity: 50 , {(group) in
-            self.allGroupList = group
-            DispatchQueue.main.async { // Correct
-                self.tableView.reloadData()
-            }
+        if searchText == "" {
             
-        })
+           searchGroups("IOS")
+        }  else {
+            searchGroups(searchText)
+        }
+            
         
-        
-        self.tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
  

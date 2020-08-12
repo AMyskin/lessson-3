@@ -11,6 +11,9 @@ import UIKit
 class CustomActivitiVC: UIViewController {
     
     
+    
+    
+    
     @IBOutlet weak var coustomActiviti2: CustomActivitiIndicator2!
     @IBOutlet weak var customAvtivityView: CustomActivitiIndicator!
 

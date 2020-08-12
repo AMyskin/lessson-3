@@ -7,26 +7,50 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class PhotosViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     lazy var service = ServiceNetwork()
     var photos: [UIImage] = []
-    var photosUrl: [String] = []
+    var fotos: [Foto] = []
     var userId: Int = 0
     
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.getFriendsPhoto(friend: userId){[weak self] (fotos) in
-            guard let self = self else {return}
+        
+        loadFromCache()
+        self.collectionView.reloadData()
+        loadFromNetwork()
+        
+     
+    }
+    
+    func loadFromCache() {
+        
+        do{
+            let realm = try Realm()
+            let foto = realm.objects(Foto.self)
+                        .filter("friendId == %@", userId)
+            self.fotos = Array(foto)
             
-            self.photosUrl = fotos
-            
-                self.collectionView.reloadData()
-            
+        }catch{
+            print(error)
         }
+        
+    }
+    
+    func loadFromNetwork() {
+        service.getFriendsPhoto(friend: userId){[weak self] (fotos) in
+                 guard let self = self else {return}
+                 
+                 self.fotos = fotos
+                 
+                     self.collectionView.reloadData()
+                 
+             }
     }
     
     // MARK: - Navigation
@@ -38,7 +62,7 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
         {
             controller.title = title
             controller.photos = photos
-            controller.photosUrl = photosUrl
+            controller.photosUrl = fotos
             controller.currentIndex = indexPath.row
         }
     }
@@ -46,12 +70,13 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
     // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosUrl.count
+        return fotos.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PhotoCell
-        cell.imageURL = photosUrl[indexPath.row]
+        cell.imageURL = fotos[indexPath.row].photosUrl
+        
         return cell
     }
     

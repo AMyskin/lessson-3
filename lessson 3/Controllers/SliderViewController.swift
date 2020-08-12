@@ -14,7 +14,7 @@ final class SliderViewController: UIViewController {
 
     
     var photos: [UIImage] = []
-    var photosUrl: [String] = []
+    var photosUrl: [Foto] = []
     var currentIndex = 0
     
     // MARK: - Outlets
@@ -28,7 +28,7 @@ final class SliderViewController: UIViewController {
         super.viewDidLoad()
         photosUrl.forEach{ (url) in
             let imageView: UIImageView = UIImageView()
-            if  let url = URL(string: url) {
+            if  let url = URL(string: url.photosUrl) {
                 imageView.kf.setImage(with: url)
             } else {
                 imageView.image = nil

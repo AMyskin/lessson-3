@@ -11,14 +11,14 @@ import RealmSwift
 
 
 // MARK: - FotoData
-class FotoData: Object, Codable {
+struct FotoData:  Codable {
 
-    @objc dynamic var photo1280 : String?
-    @objc dynamic var photo130 : String?
-    @objc dynamic var photo2560 : String?
-    @objc dynamic var photo604: String?
-    @objc dynamic var photo75 : String?
-    @objc dynamic var photo807: String?
+    let photo1280 : String?
+    let photo130 : String?
+    let photo2560 : String?
+    let photo604: String?
+    let photo75 : String?
+    let photo807: String?
 
 
     enum CodingKeys: String, CodingKey {
