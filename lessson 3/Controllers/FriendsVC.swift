@@ -11,23 +11,33 @@ import RealmSwift
 
 class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, CharDelegate, CustomSearchViewDelegate {
     
-    
+    lazy var realm: Realm = {
+        let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: config)
+        print(realm.configuration.fileURL ?? "")
+        return realm
+    }()
     
     @IBOutlet weak var customSearchBar: CustomSearchView!
     
     lazy var service = ServiceNetwork()
     let searchController = UISearchController(searchResultsController: nil)
-    var friends: [FriendData] = []
-    var friendsWithSection : [Array<FriendData>] = []
+    lazy var friends: Results<FriendData> = {
+        return realm.objects(FriendData.self)
+        
+    }()
+    lazy var friendsWithSection : [Array<FriendData>] = []
     var filteredUsers: [FriendData]  = []
     var filteredUsersWithSection : [Array<FriendData>] = []
     var filteredChars: [String] = []
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
+    
+    var notificationToken: NotificationToken?
     //  var userList = User.arrayOfFriends
     
-    //  var chars = User.sectionsOfFriends
+    
     
     
     
@@ -39,7 +49,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
     }
     
     
-    var char: String = ""
+    //var char: String = ""
     
     func charPushed(char letter: String) {
         
@@ -99,16 +109,15 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         tableView.rowHeight = 44
         
         
-        // Загрузка из realm
-        loadFromCache()
-        filteredChars = sectionsOfFriends(friends: friends)
-        friendsWithSection = arrayOfFriends(sections: filteredChars , friens: friends)
-        tableView.reloadData()
-        charPicker.delegate = self
-        charPicker.chars =  filteredChars
-        // Загрузка из сети
         loadFromNetwork()
         
+        
+        // Загрузка из realm
+        subscribeToNotifications()
+        // loadFromCache()
+        
+        
+        //loadFromNetwork()
         
         
         // 1
@@ -125,35 +134,114 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         
         
         setupTableView()
-    }
-    
-    
-    func loadFromCache() {
         
-        do{
-            let realm = try Realm()
-            let friends = realm.objects(FriendData.self)
-            self.friends = Array(friends)
-            
-        }catch{
-            print(error)
-        }
- 
+
     }
+    
+
+    private func getSectionOfFriend(friend: FriendData) -> Int {
+        
+        let lastName = friend.lastName
+        let section: Int = filteredChars.firstIndex(of: lastName.prefix(1).uppercased()) ?? 0
+        
+        return section
+    }
+    private func getRowOfFriend(friend: FriendData , section: Int) -> Int {
+        
+        let family = friend.lastName
+        let name = friend.firstName
+        
+        
+        
+        let element = self.friendsWithSection[section]
+        let row: Int = element.firstIndex{ $0.lastName == family && $0.firstName == name} ?? 0
+        
+        return  row
+    }
+    
+
+    private func reloadTableCell(row: Int, section: Int, array: [Int]) {
+        
+        tableView.beginUpdates()
+        
+        tableView.reloadRows(at: array.map { _ in IndexPath(row: row, section: section) }, with: .automatic)
+        tableView.endUpdates()
+    }
+    
+    private func subscribeToNotifications() {
+        
+
+        notificationToken = friends.observe { [weak self] (changes) in
+            guard let self = self else {return}
+            switch changes {
+            case .initial:
+                self.filteredChars = self.sectionsOfFriends(friends: Array(self.friends))
+                self.charPicker.chars = self.sectionsOfFriends(friends: Array(self.friends))
+                self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: Array(self.friends))
+                self.tableView.reloadData()
+                
+            case let .update(_, deletions, insertions, modifications):
+                self.filteredChars = self.sectionsOfFriends(friends: Array(self.friends))
+                self.charPicker.chars = self.sectionsOfFriends(friends: Array(self.friends))
+                self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: Array(self.friends))
+                print(deletions, insertions, modifications)
+                
+                if deletions.count > 0 || insertions.count > 0 {
+                    self.tableView.reloadData()
+                }
+                
+//                deletions.forEach{ index in
+//                    print( index)
+//                    if let friend = Array(arrayLiteral: self.friends[index]).first {
+//
+//                        let section = self.getSectionOfFriend(friend: friend)
+//                        let row = self.getRowOfFriend(friend: friend, section: section)
+//                        self.deleteTableCell(row: row, section: section, array: modifications)
+//                    }
+//
+//                }
+//
+//                insertions.forEach{ index in
+//                    print( index)
+//                    if let friend = Array(arrayLiteral: self.friends[index]).first {
+//
+//                        let section = self.getSectionOfFriend(friend: friend)
+//                        let row = self.getRowOfFriend(friend: friend, section: section)
+//                        self.insertTableCell(row: row, section: section, array: modifications)
+//                    }
+//
+//                }
+                
+                
+
+                modifications.forEach{ (index) in
+
+                    if let friend = Array(arrayLiteral: self.friends[index]).first {
+                             
+                             let section = self.getSectionOfFriend(friend: friend)
+                             let row = self.getRowOfFriend(friend: friend, section: section)
+                             self.reloadTableCell(row: row, section: section, array: modifications)
+                         }
+                        
+                    }
+         // let friendDel = Array(arrayLiteral: self.friends[deletions[index2]]).first
+         // let friendIns = Array(arrayLiteral: self.friends[insertions[index2]]).first
+          
+ 
+                    
+                
+                
+            case let .error(error):
+                print(error)
+            }
+        }
+    }
+    
+    
+    
     
     func loadFromNetwork() {
-        service.getFriends({[weak self] (friends) in
-            guard let self = self else {return}
-            self.friends = friends
-            self.filteredChars = self.sectionsOfFriends(friends: friends)
-            self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: friends)
-            
-            
-            self.tableView.reloadData()
-            self.charPicker.delegate = self
-            self.charPicker.chars =  self.filteredChars
-            
-        })
+        service.getFriends()
     }
     
     
@@ -380,7 +468,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         filteredUsersWithSection = arrayOfFriends
         
         if searchText == "" {
-            filteredChars = self.sectionsOfFriends(friends: friends)
+            filteredChars = self.sectionsOfFriends(friends: Array(friends))
         }
         
         charPicker.chars = filteredChars

@@ -54,7 +54,7 @@ class ServiceNetwork {
     }
     
     
-    func getFriends(_ completion: @escaping ([FriendData]) -> Void){
+    func getFriends(){
         //print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
@@ -65,17 +65,41 @@ class ServiceNetwork {
             
             do {
                 let response = try JSONDecoder().decode(VKResponse<FriendData>.self, from: jsonData)
-              
-                    completion(response.items)
+ 
                     self?.saveFriensToRealm(response.items)
                 
             } catch {
                 print(error)
-                completion([])
+              
             }
         }
         
     }
+
+    
+    
+//    func getFriends(_ completion: @escaping ([FriendData]) -> Void){
+//        //print(#function)
+//        let queryArray: [URLQueryItem] = [
+//            URLQueryItem(name: "v", value: "5.52"),
+//            URLQueryItem(name: "fields", value: "photo_50"),
+//            URLQueryItem(name: "access_token", value: session.token)
+//        ]
+//        getVkMetod(path: "/method/friends.get", queryItem: queryArray){[weak self] jsonData in
+//
+//            do {
+//                let response = try JSONDecoder().decode(VKResponse<FriendData>.self, from: jsonData)
+//
+//                    completion(response.items)
+//                    self?.saveFriensToRealm(response.items)
+//
+//            } catch {
+//                print(error)
+//                completion([])
+//            }
+//        }
+//
+//    }
     
     
     

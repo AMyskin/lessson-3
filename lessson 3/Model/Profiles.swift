@@ -7,14 +7,14 @@
 //
 
 import Foundation
-import RealmSwift
 
 
-class Profiles: Object, Decodable {
-    @objc dynamic var id: Int
-    @objc dynamic var firstName: String
-    @objc dynamic var lastName: String
-    @objc dynamic var imageUrl: String?
+
+class Profiles:  Decodable {
+    var id: Int
+    var firstName: String
+    var lastName: String
+    var imageUrl: String?
     
      enum CodingKeys: String, CodingKey {
         case id
