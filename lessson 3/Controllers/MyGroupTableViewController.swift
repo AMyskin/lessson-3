@@ -16,14 +16,24 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
     lazy var service = ServiceNetwork()
     
-    var myGroupList: [GroupData] = []
+    lazy var realm: Realm = {
+        let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: config)
+        print(realm.configuration.fileURL ?? "")
+        return realm
+    }()
+    var notificationToken: NotificationToken?
+    
+    lazy var myGroupList: Results<GroupData> = {
+        return realm.objects(GroupData.self)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 60
         
-        loadFromCache()
-        tableView.reloadData()
+        subscribeToNotificationsWithRealm()
+        
         
         loadFromNetwork()
         
@@ -35,46 +45,40 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
         
     }
     
-    func loadFromCache() {
-        
-        do{
-            let realm = try Realm()
-            let group = realm.objects(GroupData.self)
-            self.myGroupList = Array(group)
-            
-        }catch{
-            print(error)
+    private func subscribeToNotificationsWithRealm() {
+        notificationToken = myGroupList.observe { [weak self] (changes) in
+            switch changes {
+            case .initial:
+                self?.tableView.reloadData()
+                
+            case let .update(_, deletions, insertions, modifications):
+                self?.tableView.beginUpdates()
+                
+                self?.tableView.deleteRows(at: deletions.mapToIndexPaths(),
+                                           with: .automatic)
+                self?.tableView.insertRows(at: insertions.mapToIndexPaths(),
+                                           with: .automatic)
+                self?.tableView.reloadRows(at: modifications.mapToIndexPaths(),
+                                           with: .automatic)
+                
+                self?.tableView.endUpdates()
+                
+            case let .error(error):
+                print(error)
+            }
         }
-        
     }
     
+
+    
     func loadFromNetwork() {
-        service.getMyGroups(group: "test", {[weak self](group) in
-             guard let self = self else {return}
-             self.myGroupList = group
-             
-             self.tableView.reloadData()
-             
-             
-         })
+        service.getMyGroups()
     }
 
     
   
     
-    @IBAction func addGroup(segue: UIStoryboardSegue) {
-         guard
-             let allGroupsController = segue.source as? AllGroupTableViewController,
-             let indexPath = allGroupsController.tableView.indexPathForSelectedRow
-             else { return }
-         
-         let group = allGroupsController.allGroupList[indexPath.row]
-         
-        guard !myGroupList.contains(group) else { return }
-         
-         myGroupList.append(group)
-         tableView.reloadData()
-     }
+ 
 
     // MARK: - Table view data source
 
@@ -99,10 +103,47 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
          if editingStyle == .delete {
-             myGroupList.remove(at: indexPath.row)
-             tableView.deleteRows(at: [indexPath], with: .fade)
+            deleteMyGroup(myGroupList[indexPath.row])
          }
      }
+    
+    @IBAction func addGroup(segue: UIStoryboardSegue) {
+          guard
+              let allGroupsController = segue.source as? AllGroupTableViewController,
+              let indexPath = allGroupsController.tableView.indexPathForSelectedRow
+              else { return }
+          
+          let group = allGroupsController.allGroupList[indexPath.row]
+          
+         guard !myGroupList.contains(group) else { return }
+         
+         addToMyGroup(group)
+          
+      }
+    
+    private func addToMyGroup(_ group: GroupData) {
+
+        
+        do {
+            try realm.write {
+                realm.add(group, update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func deleteMyGroup(_ group: GroupData) {
+        do {
+            try realm.write {
+                realm.delete(group)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    
     
     func buttonTapped(cell: GroupCell, button: UIButton) {
         //guard let indexPath = self.tableView.indexPath(for: cell) else {return}

@@ -38,6 +38,7 @@
 		0A74968724ACF6D6008EE3E3 /* NewsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A74968624ACF6D6008EE3E3 /* NewsVC.swift */; };
 		0A74968A24ACF8B6008EE3E3 /* UserNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A74968824ACF8B6008EE3E3 /* UserNewsCell.swift */; };
 		0A74968B24ACF8B6008EE3E3 /* UserNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A74968924ACF8B6008EE3E3 /* UserNewsCell.xib */; };
+		0A7F7A5424E9105200914609 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7F7A5324E9105200914609 /* ArrayExtension.swift */; };
 		0A82104D24B8C964007B44A3 /* extansion_UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82104C24B8C964007B44A3 /* extansion_UIImage.swift */; };
 		0A82104F24B8F283007B44A3 /* SwipeInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A82104E24B8F283007B44A3 /* SwipeInteractionController.swift */; };
 		0A97371624B12E6600DA9BF0 /* CustomSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A97371524B12E6600DA9BF0 /* CustomSearchView.swift */; };
@@ -114,6 +115,7 @@
 		0A74968624ACF6D6008EE3E3 /* NewsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsVC.swift; sourceTree = "<group>"; };
 		0A74968824ACF8B6008EE3E3 /* UserNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNewsCell.swift; sourceTree = "<group>"; };
 		0A74968924ACF8B6008EE3E3 /* UserNewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNewsCell.xib; sourceTree = "<group>"; };
+		0A7F7A5324E9105200914609 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		0A82104C24B8C964007B44A3 /* extansion_UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extansion_UIImage.swift; sourceTree = "<group>"; };
 		0A82104E24B8F283007B44A3 /* SwipeInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeInteractionController.swift; sourceTree = "<group>"; };
 		0A97371524B12E6600DA9BF0 /* CustomSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchView.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				0A82104C24B8C964007B44A3 /* extansion_UIImage.swift */,
 				0AE3BB5F24AE6B4600742558 /* UITableView+Ext.swift */,
 				0AE50E7D24BF911900D7673D /* CGRectExtension.swift */,
+				0A7F7A5324E9105200914609 /* ArrayExtension.swift */,
 				0AFE7A8124D727C000E03CD6 /* UIScrollViewExtension.swift */,
 			);
 			path = Helpers;
@@ -473,6 +476,7 @@
 				0A74968524ACE9F3008EE3E3 /* NewsOfUser.swift in Sources */,
 				0AE68AA724B0E315007647B0 /* CustomActivitiVC.swift in Sources */,
 				0AA27B5724CB7E8800AAC4E4 /* RandomDate.swift in Sources */,
+				0A7F7A5424E9105200914609 /* ArrayExtension.swift in Sources */,
 				0AE3BB8624AF934800742558 /* CustomActivitiIndicator.swift in Sources */,
 				0A2339DD249E8E9B00290688 /* MyGroupTableViewController.swift in Sources */,
 				0A2339D7249E563E00290688 /* CollectionViewController.swift in Sources */,

@@ -12,8 +12,18 @@ import RealmSwift
 final class PhotosViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     lazy var service = ServiceNetwork()
-    var photos: [UIImage] = []
-    var fotos: [Foto] = []
+    
+    lazy var realm: Realm = {
+        let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
+        let realm = try! Realm(configuration: config)
+        print(realm.configuration.fileURL ?? "")
+        return realm
+    }()
+    var notificationToken: NotificationToken?
+
+    lazy var fotos: Results<Foto> = {
+        return realm.objects(Foto.self)
+    }()
     var userId: Int = 0
     
     // MARK: - Life cycle
@@ -21,36 +31,41 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadFromCache()
-        self.collectionView.reloadData()
+   
+        subscribeToNotificationsWithRealm()
         loadFromNetwork()
         
      
     }
     
-    func loadFromCache() {
+    private func subscribeToNotificationsWithRealm() {
+        fotos = realm.objects(Foto.self).filter("friendId == %@", userId)
+           
         
-        do{
-            let realm = try Realm()
-            let foto = realm.objects(Foto.self)
-                        .filter("friendId == %@", userId)
-            self.fotos = Array(foto)
-            
-        }catch{
-            print(error)
+        
+        notificationToken = fotos.observe { [weak self] (changes) in
+            switch changes {
+            case .initial:
+                self?.collectionView.reloadData()
+                
+            case let .update(_, deletions, insertions, modifications):
+                print(deletions, insertions, modifications)
+                self?.collectionView.performBatchUpdates({
+                    self?.collectionView.deleteItems(at: deletions.mapToIndexPaths())
+                    self?.collectionView.insertItems(at: insertions.mapToIndexPaths())
+                    self?.collectionView.reloadItems(at: modifications.mapToIndexPaths())
+                }, completion: nil)
+                
+            case let .error(error):
+                print(error)
+            }
         }
-        
     }
     
+
+    
     func loadFromNetwork() {
-        service.getFriendsPhoto(friend: userId){[weak self] (fotos) in
-                 guard let self = self else {return}
-                 
-                 self.fotos = fotos
-                 
-                     self.collectionView.reloadData()
-                 
-             }
+        service.getFriendsPhoto(friend: userId)
     }
     
     // MARK: - Navigation
@@ -61,8 +76,7 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
             let indexPath = collectionView.indexPathsForSelectedItems?.first
         {
             controller.title = title
-            controller.photos = photos
-            controller.photosUrl = fotos
+            controller.photosUrl = Array(fotos)
             controller.currentIndex = indexPath.row
         }
     }

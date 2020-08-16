@@ -103,7 +103,7 @@ class ServiceNetwork {
     
     
     
-    func getFriendsPhoto(friend: Int,_ completion: @escaping ([Foto]) -> Void){
+    func getFriendsPhoto(friend: Int){
         //print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
@@ -118,13 +118,12 @@ class ServiceNetwork {
                 let fotos = try JSONDecoder().decode(VKResponse<FotoData>.self, from: jsonData).items
                 
                     let tmpFoto = self.convertFoto(forFriend: friend, response: fotos)
-                    completion(tmpFoto)
                     self.saveFotoToRealm(tmpFoto, friendId: friend)
          
                 
             } catch {
                 print(error)
-                completion([])
+          
             }
             
         }
@@ -478,7 +477,7 @@ class ServiceNetwork {
     
     
     
-    func getMyGroups(group: String, _ callback: @escaping ( ([GroupData]) -> Void)){
+    func getMyGroups(){
         print(#function)
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.52"),
@@ -493,13 +492,12 @@ class ServiceNetwork {
             do {
                 
                 let response = try JSONDecoder().decode(VKResponse<GroupData>.self, from: jsonData).items
-                
-                    callback(response)
+
                     self.saveGroupsToRealm(response)
                 
             } catch {
                 print(error)
-                callback([])
+          
             }
             
             

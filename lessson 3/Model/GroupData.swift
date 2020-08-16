@@ -15,6 +15,10 @@ class GroupData: Object, Decodable {
     @objc dynamic var screenName: String
     @objc dynamic var imageUrl: String?
     
+    override class func primaryKey() -> String? {
+         return "id"
+     }
+    
      enum CodingKeys: String, CodingKey {
         case id, name
         case screenName = "screen_name"
