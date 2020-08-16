@@ -8,6 +8,11 @@ final class FriendData: Object, Codable {
     @objc dynamic var lastName: String = ""
     @objc dynamic var avatar: String = ""
     @objc dynamic var online: Int = 0
+    let foto = List<Foto>()
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 
 
     enum CodingKeys: String, CodingKey {

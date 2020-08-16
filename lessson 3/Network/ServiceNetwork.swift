@@ -117,7 +117,7 @@ class ServiceNetwork {
                 
                 let fotos = try JSONDecoder().decode(VKResponse<FotoData>.self, from: jsonData).items
                 
-                    let tmpFoto = self.convertFoto(forFriend: friend, response: fotos)
+                    let tmpFoto = self.convertFoto(response: fotos)
                     self.saveFotoToRealm(tmpFoto, friendId: friend)
          
                 
@@ -424,7 +424,7 @@ class ServiceNetwork {
     }
     
     
-    func convertFoto(forFriend id: Int, response : [FotoData]) -> [Foto]{
+    func convertFoto( response : [FotoData]) -> [Foto]{
         
         
         var attachmentFotoSizeDicUrl: [Foto] = []
@@ -463,7 +463,6 @@ class ServiceNetwork {
             if let photo = photo {
                 
                 let tmpFotos = Foto()
-                tmpFotos.friendId = id
                 tmpFotos.photosUrl = photo
                 
                 attachmentFotoSizeDicUrl.append(tmpFotos)
@@ -572,12 +571,14 @@ class ServiceNetwork {
     func saveFotoToRealm(_ objects: [Foto], friendId: Int) {
         do{
             let realm = try Realm()
-            let oldObjects = realm.objects(Foto.self)
-                   .filter("friendId == %@", friendId)
+            guard let friend = realm.object(ofType: FriendData.self, forPrimaryKey: friendId) else { return }
+       
+            let oldObjects = friend.foto
             
             try realm.write{
                 realm.delete(oldObjects)
                 realm.add(objects)
+                friend.foto.append(objectsIn: objects)
             }
         }catch{
             print(error)

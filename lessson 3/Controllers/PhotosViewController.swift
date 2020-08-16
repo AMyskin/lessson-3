@@ -21,9 +21,7 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
     }()
     var notificationToken: NotificationToken?
 
-    lazy var fotos: Results<Foto> = {
-        return realm.objects(Foto.self)
-    }()
+    lazy var fotos = List<Foto>()
     var userId: Int = 0
     
     // MARK: - Life cycle
@@ -39,8 +37,12 @@ final class PhotosViewController: UICollectionViewController, UICollectionViewDe
     }
     
     private func subscribeToNotificationsWithRealm() {
-        fotos = realm.objects(Foto.self).filter("friendId == %@", userId)
+        guard let object = realm.object(ofType: FriendData.self, forPrimaryKey: userId) else {
+                  return
+              }
+        //fotos = realm.objects(Foto.self).filter("friendId == %@", userId)
            
+        fotos = object.foto
         
         
         notificationToken = fotos.observe { [weak self] (changes) in

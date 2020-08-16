@@ -154,12 +154,11 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         
         
         let element = self.friendsWithSection[section]
-        let row: Int = element.firstIndex{ $0.lastName == family && $0.firstName == name} ?? 0
+        let row: Int = element.firstIndex{ $0.lastName == family && $0.firstName == name} ?? element.count - 1
         
         return  row
     }
     
-
     private func reloadTableCell(row: Int, section: Int, array: [Int]) {
         
         tableView.beginUpdates()
@@ -167,6 +166,15 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         tableView.reloadRows(at: array.map { _ in IndexPath(row: row, section: section) }, with: .automatic)
         tableView.endUpdates()
     }
+    
+
+//    private func insertTableCell(row: Int, section: Int, array: [Int]) {
+//
+//        tableView.beginUpdates()
+//
+//        tableView.insertRows(at: array.map { _ in IndexPath(row: row, section: section) }, with: .automatic)
+//        tableView.endUpdates()
+//    }
     
     private func subscribeToNotifications() {
         
@@ -181,12 +189,22 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
                 self.tableView.reloadData()
                 
             case let .update(_, deletions, insertions, modifications):
-                self.filteredChars = self.sectionsOfFriends(friends: Array(self.friends))
-                self.charPicker.chars = self.sectionsOfFriends(friends: Array(self.friends))
-                self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: Array(self.friends))
+                //   var filteredUsers: [FriendData]  = []
+                // var filteredUsersWithSection : [Array<FriendData>] = []
+                // var filteredChars: [String] = []
+                if self.isFiltering {
+                    self.filteredChars = self.sectionsOfFriends(friends: self.filteredUsers)
+                    self.charPicker.chars = self.sectionsOfFriends(friends: self.filteredUsers)
+                    self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: self.filteredUsers)
+                } else {
+                    
+                    self.filteredChars = self.sectionsOfFriends(friends: Array(self.friends))
+                    self.charPicker.chars = self.sectionsOfFriends(friends: Array(self.friends))
+                    self.friendsWithSection = self.arrayOfFriends(sections: self.filteredChars , friens: Array(self.friends))
+                }
                 print(deletions, insertions, modifications)
                 
-                if deletions.count > 0 || insertions.count > 0 {
+                if deletions.count > 0 || insertions.count > 0  {
                     self.tableView.reloadData()
                 }
                 
@@ -304,6 +322,7 @@ class FriendsVC: UIViewController, UITableViewDelegate, UITableViewDataSource, C
         if isFiltering {
             return filteredUsersWithSection[section].count
         }
+        friendsWithSection = arrayOfFriends(sections: filteredChars , friens: Array(self.friends))
         
         return friendsWithSection[section].count
     }

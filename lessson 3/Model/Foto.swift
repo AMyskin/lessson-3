@@ -11,7 +11,7 @@ import RealmSwift
 
 class Foto: Object {
 
-    @objc dynamic var friendId : Int = 0
+    //@objc dynamic var friendId : Int = 0
     @objc dynamic var photosUrl : String = ""
     
    
