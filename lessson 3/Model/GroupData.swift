@@ -8,6 +8,7 @@
 
 import Foundation
 import RealmSwift
+import FirebaseDatabase
 
 class GroupData: Object, Decodable {
     @objc dynamic var id: Int
@@ -25,5 +26,42 @@ class GroupData: Object, Decodable {
         case imageUrl = "photo_50"
     }
     
+
+}
+
+final class FirebaseGroup  {
+    let  id: Int
+    let  name: String
+    let  imageUrl: String
+    
+    var ref: DatabaseReference?
+    
+    init(id: Int, name: String, imageUrl: String) {
+        self.id = id
+        self.name = name
+        self.imageUrl = imageUrl
+    }
+    
+    init?(snapshot: DataSnapshot?) {
+        guard
+            let value = snapshot?.value as? [String: Any],
+            let name = value["name"] as? String,
+            let imageUrl = value["imageUrl"] as? String,
+            let id = value["id"] as? Int
+            else { return nil }
+        
+        self.name = name
+        self.imageUrl = imageUrl
+        self.id = id
+        self.ref = snapshot?.ref
+    }
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "name": name,
+            "imageUrl": imageUrl
+        ]
+    }
+
 
 }

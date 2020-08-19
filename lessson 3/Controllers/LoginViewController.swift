@@ -8,8 +8,14 @@
 
 import UIKit
 import WebKit
+import FirebaseDatabase
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
+    
+    lazy var service = ServiceNetwork()
+    
+    lazy var database = Database.database()
+    lazy var ref: DatabaseReference = self.database.reference(withPath: "users")
     
     @IBOutlet weak var webview: WKWebView! {
         didSet{
@@ -80,7 +86,20 @@ extension LoginViewController: WKNavigationDelegate {
         session.token = token
         session.userId = userId
         
+       
+        loadUser { [weak self] (user) in
+            print (user)
+            if user.count == 0 {
+                self?.addUser()
+            }
+                //addUser()
+            
+         }
+    
+        
         passData()
+        
+        
 
         
         decisionHandler(.cancel)
@@ -94,5 +113,26 @@ extension LoginViewController: WKNavigationDelegate {
         //navigationController?.pushViewController(secondViewController, animated: true)
         self.present(secondViewController, animated: false, completion: nil)
         //show(secondViewController, sender: nil)
+    }
+    
+     // MARK: - Firebase
+    
+    func addUser() {
+        service.getUserInfo{[weak self] user in
+            self?.ref
+                .child("\(user.id)")
+                .setValue(user.toDictionary())
+                
+            }
+        
+    }
+    
+    private func loadUser(completion: @escaping ([Any]) -> Void) {
+        ref.observe(.value) { (snapshot) in
+            let user = snapshot
+                .children
+                .compactMap{($0)}
+            completion(user)
+        }
     }
 }

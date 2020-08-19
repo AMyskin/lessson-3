@@ -53,6 +53,30 @@ class ServiceNetwork {
         
     }
     
+    func getUserInfo(completion: @escaping (FirebaseUser) -> Void){
+               let queryArray: [URLQueryItem] = [
+                   URLQueryItem(name: "v", value: "5.122"),
+                   URLQueryItem(name: "access_token", value: session.token)
+               ]
+               getVkMetod(path: "/method/account.getProfileInfo", queryItem: queryArray){ jsonData in
+                   
+                   do {
+                    
+                    
+                    let response = try JSONDecoder().decode(FirebaseUser.self, from: jsonData)
+                    
+                   // print(response.userFirstName + " " + response.userLastName)
+                    completion(response)
+//
+//                           self?.saveFriensToRealm(response.items)
+                       
+                   } catch {
+                       print(error)
+                     
+                   }
+               }
+    }
+    
     
     func getFriends(){
         //print(#function)

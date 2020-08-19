@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import FirebaseDatabase
 
 class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
@@ -15,6 +16,9 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
     
     lazy var service = ServiceNetwork()
+    
+    lazy var database = Database.database()
+    lazy var ref: DatabaseReference = self.database.reference(withPath: "users")
     
     lazy var realm: Realm = {
         let config = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
@@ -117,7 +121,8 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
           
          guard !myGroupList.contains(group) else { return }
          
-         addToMyGroup(group)
+        addToMyGroup(group)
+        addGroupToUserInFirebase(group)
           
       }
     
@@ -159,6 +164,21 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
                        button.layer.add(pulse, forKey: nil)
               
            
+    }
+    
+     // MARK: - Firebase
+    
+    func addGroupToUserInFirebase(_ group : GroupData) {
+        
+        let fireGroup = FirebaseGroup(id: group.id, name: group.name, imageUrl: group.imageUrl ?? "")
+            ref
+                .child("\(Session.instance.userId)")
+                .child("groups")
+                .child("\(group.id)")
+                .setValue(fireGroup.toDictionary())
+                
+            
+        
     }
     
        
