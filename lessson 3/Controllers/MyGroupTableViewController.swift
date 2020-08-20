@@ -170,9 +170,9 @@ class MyGroupTableViewController: UITableViewController , GroupCellDelegate{
     
     func addGroupToUserInFirebase(_ group : GroupData) {
         
-        let fireGroup = FirebaseGroup(id: group.id, name: group.name, imageUrl: group.imageUrl ?? "")
+        let fireGroup = FirebaseGroup(id: group.id, name: group.name, imageUrl: group.imageUrl ?? "", userId: Session.instance.userId)
             ref
-                .child("\(Session.instance.userId)")
+                //.child("\(Session.instance.userId)") хотел хранить группы внутри пользователя
                 .child("groups")
                 .child("\(group.id)")
                 .setValue(fireGroup.toDictionary())

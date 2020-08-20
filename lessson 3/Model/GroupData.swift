@@ -31,15 +31,17 @@ class GroupData: Object, Decodable {
 
 final class FirebaseGroup  {
     let  id: Int
+    let  userId: Int
     let  name: String
     let  imageUrl: String
     
     var ref: DatabaseReference?
     
-    init(id: Int, name: String, imageUrl: String) {
+    init(id: Int, name: String, imageUrl: String, userId: Int) {
         self.id = id
         self.name = name
         self.imageUrl = imageUrl
+        self.userId = userId
     }
     
     init?(snapshot: DataSnapshot?) {
@@ -47,19 +49,22 @@ final class FirebaseGroup  {
             let value = snapshot?.value as? [String: Any],
             let name = value["name"] as? String,
             let imageUrl = value["imageUrl"] as? String,
-            let id = value["id"] as? Int
+            let id = value["id"] as? Int,
+            let userId = value["userId"] as? Int
             else { return nil }
         
         self.name = name
         self.imageUrl = imageUrl
         self.id = id
         self.ref = snapshot?.ref
+        self.userId = userId
     }
     
     func toDictionary() -> [String: Any] {
         return [
             "name": name,
-            "imageUrl": imageUrl
+            "imageUrl": imageUrl,
+            "userId": userId
         ]
     }
 

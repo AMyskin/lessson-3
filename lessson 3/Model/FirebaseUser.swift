@@ -39,6 +39,7 @@ final class FirebaseUser: Decodable{
         return [
             "userFirstName": userFirstName,
             "userLastName": userLastName
+   
         ]
     }
     
@@ -57,6 +58,7 @@ final class FirebaseUser: Decodable{
         
         self.userFirstName = try container.decode(String.self, forKey: .userFirstName)
         self.userLastName = try container.decode(String.self, forKey: .userLastName)
+    
 
     }
 }

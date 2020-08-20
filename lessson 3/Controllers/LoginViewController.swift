@@ -87,14 +87,14 @@ extension LoginViewController: WKNavigationDelegate {
         session.userId = userId
         
        
-        loadUser { [weak self] (user) in
-            print (user)
-            if user.count == 0 {
-                self?.addUser()
-            }
-                //addUser()
+//        loadUser { [weak self] (user) in
+//            print (user)
+//            if user.count == 0 {
+//                self?.addUser()
+//            }
+              addUser()
             
-         }
+        // }
     
         
         passData()
@@ -127,12 +127,16 @@ extension LoginViewController: WKNavigationDelegate {
         
     }
     
-    private func loadUser(completion: @escaping ([Any]) -> Void) {
-        ref.observe(.value) { (snapshot) in
-            let user = snapshot
-                .children
-                .compactMap{($0)}
-            completion(user)
-        }
-    }
+    // Нужно подумать
+    
+//    private func loadUser(completion: @escaping ([Any]) -> Void) {
+//        ref.observe(.value) { (snapshot) in
+//            let user = snapshot
+//                .children
+//                .compactMap{
+//                    FirebaseUser(snapshot: $0 as? DataSnapshot)
+//            }
+//            completion(user)
+//        }
+//    }
 }
