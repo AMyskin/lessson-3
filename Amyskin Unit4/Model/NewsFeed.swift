@@ -8,6 +8,16 @@
 
 import Foundation
 
+enum PostSourceType: String, Codable {
+    case api = "api"
+    case vk = "vk"
+}
+
+enum PostTypeEnum: String, Codable {
+    case post = "post"
+    case photo = "photo"
+}
+
 // MARK: - NewsFeedElement
 struct NewsFeedElement: Codable {
     let sourceID, date: Int
@@ -21,7 +31,7 @@ struct NewsFeedElement: Codable {
     let likes: Likes
     let reposts: Reposts
     let views: Views
-    let isFavorite: Bool
+    //let isFavorite: Bool?
     let postID: Int
 
     enum CodingKeys: String, CodingKey {
@@ -36,7 +46,7 @@ struct NewsFeedElement: Codable {
         case attachments
        // case postSource = "post_source"
         case comments, likes, reposts, views
-        case isFavorite = "is_favorite"
+       // case isFavorite = "is_favorite"
         case postID = "post_id"
     }
 }
@@ -118,7 +128,7 @@ struct PreviewPhoto: Codable {
 // MARK: - VideoElement
 struct VideoElement: Codable {
     let src: String?
-    let width, height: Int
+    let width, height: Int?
     let type: String?
     let fileSize: Int?
     let url: String?
@@ -137,13 +147,13 @@ struct Link: Codable {
     let url: String
     let title, linkDescription, target: String?
     let photo: LinkPhoto
-    let isFavorite: Bool
+    //let isFavorite: Bool
 
     enum CodingKeys: String, CodingKey {
         case url, title
         case linkDescription = "description"
         case target, photo
-        case isFavorite = "is_favorite"
+       // case isFavorite = "is_favorite"
     }
 }
 
@@ -190,7 +200,6 @@ struct AttachmentVideo: Codable {
  
     let date: Int
     let videoDescription: String
-    let duration: Int
     let image: [VideoElement] //,firstFrame: [VideoElement]
     let title: String
     let views: Int
@@ -199,7 +208,7 @@ struct AttachmentVideo: Codable {
     
         case date
         case videoDescription = "description"
-        case duration, image
+        case image
         case title
         case views
     }
@@ -235,14 +244,7 @@ struct PostSource: Codable {
     let platform: String?
 }
 
-enum PostSourceType: String, Codable {
-    case api = "api"
-    case vk = "vk"
-}
 
-enum PostTypeEnum: String, Codable {
-    case post = "post"
-}
 
 // MARK: - Reposts
 struct Reposts: Codable {

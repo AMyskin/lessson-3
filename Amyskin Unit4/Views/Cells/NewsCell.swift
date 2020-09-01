@@ -14,11 +14,17 @@ final class NewsCell: UITableViewCell {
     @IBOutlet weak var authorImageView: UIImageView!
     @IBOutlet weak var authorNameLabel: UILabel!
     @IBOutlet weak var publishedDateLabel: UILabel!
-    @IBOutlet weak var newsTextLabel: UILabel!
+   // @IBOutlet weak var newsTextLabel: UILabel!
+    @IBOutlet weak var newsText: UITextView!
     @IBOutlet weak var photoImageView: UIImageView!
     
-    @IBOutlet weak var countOfViewLabel: UILabel!
-    @IBOutlet weak var countOfLikeLabel: UILabel!
+  //  @IBOutlet weak var countOfViewLabel: UILabel!
+  //  @IBOutlet weak var countOfLikeLabel: UILabel!
+    
+    @IBOutlet weak var viewsButton: UIButton!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var commentsButton: UIButton!
+    @IBOutlet weak var repostsButton: UIButton!
     
     var imageURL: String? {
         didSet{
@@ -50,17 +56,27 @@ final class NewsCell: UITableViewCell {
         
         authorNameLabel.text = item.author
         publishedDateLabel.text = dateFormatter.string(from: item.date)
-        newsTextLabel.text = item.newsTest
+       // newsTextLabel.text = item.newsTest
+        newsText.text = item.newsTest
         authorImageView.image = UIImage(named: "1")
         imageURL = item.imageUrl?[0]
         avatarURL = item.avatarUrl
-        countOfViewLabel.text = getStringOfCount(item.countOfViews)
-        countOfLikeLabel.text = getStringOfCount(item.countOfLike)
+       // countOfViewLabel.text = getStringOfCount(item.countOfViews)
+       // countOfLikeLabel.text = getStringOfCount(item.countOfLike)
+        viewsButton.titleLabel?.text = getStringOfCount(item.countOfViews)
+        likeButton.titleLabel?.text = getStringOfCount(item.countOfLike)
+        commentsButton.titleLabel?.text = getStringOfCount(item.countOfComents)
+        repostsButton.titleLabel?.text = getStringOfCount(item.countOfReposts)
+        
+        
+      
     }
     
     func getStringOfCount(_ num : Int) -> String {
         var str = "\(num)"
-        
+        if num == 0 {
+            return ""
+        }
         if num > 1000 && num < 2000 {
             str = String(format: "%1d.1K", num/1000)
         }else  if num > 2000 {
@@ -79,13 +95,14 @@ final class NewsCell: UITableViewCell {
         super.prepareForReuse()
         authorNameLabel.text = nil
           publishedDateLabel.text = nil
-          newsTextLabel.text = nil
+        newsText.text = nil
+          //newsTextLabel.text = nil
           photoImageView.image = nil
           authorImageView.image = nil
           imageURL = nil
           avatarURL = nil
-          countOfViewLabel.text = nil
-          countOfLikeLabel.text = nil
+          //countOfViewLabel.text = nil
+         // countOfLikeLabel.text = nil
     }
     
 }

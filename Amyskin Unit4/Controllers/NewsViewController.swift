@@ -81,10 +81,19 @@ final class NewsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsCell
+        let postNews = news[indexPath.row]
+        if postNews.type == .photo {
+            print("photo")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! NewsCell
+            cell.configure(item: news[indexPath.row], dateFormatter: dateFormatter)
+            
+            return cell
+        } else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! NewsCell
         cell.configure(item: news[indexPath.row], dateFormatter: dateFormatter)
         
         return cell
+        }
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -251,10 +251,13 @@ class ServiceNetwork {
                     avatarUrl = avatar
                 }
             }
+            let newsType = news.postType
             let newsDate = Date(timeIntervalSince1970: TimeInterval(news.date))
             let newsText = news.text
             let countOfViews = news.views.count
             let likesCount = news.likes.count
+            let countOfReposts = news.reposts.count
+            let countOfComents = news.comments.count
             if let newsAttach = news.attachments {
                 
                 newsAttach.forEach{(attachment) in
@@ -288,7 +291,8 @@ class ServiceNetwork {
                     }
                 }
                 
-                let tmpNew: NewsOfUser = NewsOfUser(author: author,
+                let tmpNew: NewsOfUser = NewsOfUser(type: newsType,
+                                                    author: author,
                                                     avatarUrl: avatarUrl,
                                                     imageUrl: [attachmentFotoSizeDicUrl],
                                                     attachments: nil,
@@ -296,6 +300,8 @@ class ServiceNetwork {
                                                     newsTest: newsText,
                                                     countOfViews: countOfViews,
                                                     countOfLike: likesCount,
+                                                    countOfReposts: countOfReposts,
+                                                    countOfComents: countOfComents,
                                                     isLiked: true)
                 
                 tmpNews.append(tmpNew)
@@ -319,7 +325,7 @@ class ServiceNetwork {
             
             //  author = news.ownerID
             //  avatarUrl = avatar
-            
+            // let newsType = news.postType
             let newsDate = Date(timeIntervalSince1970: TimeInterval(news.date))
             var newsText = news.text
             let countOfViews = 0
@@ -430,7 +436,8 @@ class ServiceNetwork {
             //            if attachmentFotoSizeDicUrl.count > 0 {
             //                print("картинок обнаружено \(attachmentFotoSizeDicUrl.count)")
             //            }
-            let tmpNew: NewsOfUser = NewsOfUser(author: "",
+            let tmpNew: NewsOfUser = NewsOfUser(type: PostTypeEnum.post,
+                                                author: "",
                                                 avatarUrl: "",
                                                 imageUrl: attachmentFotoSizeDicUrl,
                                                 attachments: news.attachments,
@@ -438,6 +445,8 @@ class ServiceNetwork {
                                                 newsTest: newsText,
                                                 countOfViews: countOfViews,
                                                 countOfLike: likesCount,
+                                                countOfReposts: 0,
+                                                countOfComents: 0,
                                                 isLiked: true)
             
             tmpNews.append(tmpNew)

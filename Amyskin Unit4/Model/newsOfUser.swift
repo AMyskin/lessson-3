@@ -9,6 +9,7 @@
 import UIKit
 
 public struct NewsOfUser: Equatable {
+    var type: PostTypeEnum
     var author: String
     var avatarUrl: String?
     var imageUrl: [String]?
@@ -18,9 +19,11 @@ public struct NewsOfUser: Equatable {
     var newsTest : String
     var countOfViews : Int
     var countOfLike : Int
+    var countOfReposts : Int
+    var countOfComents : Int
     var isLiked : Bool
     
-
+ 
     
     public static func == (lhs: NewsOfUser, rhs: NewsOfUser) -> Bool {
         return lhs.newsTest == rhs.newsTest

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A0641E024FE7D2900192FD2 /* PhotoNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0641DF24FE7D2800192FD2 /* PhotoNewsCell.swift */; };
 		0A06777324E316D10054F274 /* Foto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A06777224E316D10054F274 /* Foto.swift */; };
 		0A2339D5249E39BA00290688 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D4249E39BA00290688 /* UserCell.swift */; };
 		0A2339D7249E563E00290688 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2339D6249E563E00290688 /* CollectionViewController.swift */; };
@@ -85,6 +86,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A0641DF24FE7D2800192FD2 /* PhotoNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoNewsCell.swift; sourceTree = "<group>"; };
 		0A06777224E316D10054F274 /* Foto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foto.swift; sourceTree = "<group>"; };
 		0A2339D4249E39BA00290688 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		0A2339D6249E563E00290688 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				0A2339D8249E57B200290688 /* UserCollectionViewCell.swift */,
 				0A2339E0249E901600290688 /* GroupCell.swift */,
 				0AA27B5A24CB865100AAC4E4 /* NewsCell.swift */,
+				0A0641DF24FE7D2800192FD2 /* PhotoNewsCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -237,7 +240,7 @@
 		0A668DD324929BF800F860CB = {
 			isa = PBXGroup;
 			children = (
-				0A668DDE24929BF800F860CB /* lessson 3 */,
+				0A668DDE24929BF800F860CB /* Amyskin Unit4 */,
 				0A668DDD24929BF800F860CB /* Products */,
 				0A9C921624CDAACD00374903 /* Frameworks */,
 				C5D30EE9174AF34E0C06F538 /* Pods */,
@@ -252,7 +255,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0A668DDE24929BF800F860CB /* lessson 3 */ = {
+		0A668DDE24929BF800F860CB /* Amyskin Unit4 */ = {
 			isa = PBXGroup;
 			children = (
 				0AA27B5C24CB898C00AAC4E4 /* Network */,
@@ -264,7 +267,7 @@
 				0A2339EE24A6518C00290688 /* Controllers */,
 				0AA27B4824CB6A4600AAC4E4 /* Helpers */,
 			);
-			path = "lessson 3";
+			path = "Amyskin Unit4";
 			sourceTree = "<group>";
 		};
 		0A6C8EDD24B651340098E340 /* AnimateImage */ = {
@@ -401,9 +404,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0A668DDB24929BF800F860CB /* lessson 3 */ = {
+		0A668DDB24929BF800F860CB /* Amyskin Unit4 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A668DF024929BF900F860CB /* Build configuration list for PBXNativeTarget "lessson 3" */;
+			buildConfigurationList = 0A668DF024929BF900F860CB /* Build configuration list for PBXNativeTarget "Amyskin Unit4" */;
 			buildPhases = (
 				E7CEF6B33D502ECC434FB37D /* [CP] Check Pods Manifest.lock */,
 				0A668DD824929BF800F860CB /* Sources */,
@@ -415,7 +418,7 @@
 			);
 			dependencies = (
 			);
-			name = "lessson 3";
+			name = "Amyskin Unit4";
 			packageProductDependencies = (
 				0A9C922924D0C56000374903 /* Kingfisher */,
 				0AE3897D24DB4DF6001B2BB9 /* RealmSwift */,
@@ -439,7 +442,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0A668DD724929BF800F860CB /* Build configuration list for PBXProject "lessson 3" */;
+			buildConfigurationList = 0A668DD724929BF800F860CB /* Build configuration list for PBXProject "Amyskin Unit4" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -456,7 +459,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0A668DDB24929BF800F860CB /* lessson 3 */,
+				0A668DDB24929BF800F860CB /* Amyskin Unit4 */,
 			);
 		};
 /* End PBXProject section */
@@ -535,6 +538,7 @@
 				0A2339EB24A3B43E00290688 /* FriendsVC.swift in Sources */,
 				0A9C922024D04FC200374903 /* ServiceNetwork.swift in Sources */,
 				0AE50E7E24BF911900D7673D /* CGRectExtension.swift in Sources */,
+				0A0641E024FE7D2900192FD2 /* PhotoNewsCell.swift in Sources */,
 				0AA27B5924CB7FEA00AAC4E4 /* UIViewExtension.swift in Sources */,
 				0AFE7A7C24D7250C00E03CD6 /* PhotosViewController.swift in Sources */,
 				0A6C8ED624B5E8640098E340 /* CustomPushAnimator.swift in Sources */,
@@ -735,13 +739,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X98JSWP28N;
-				INFOPLIST_FILE = "lessson 3/App/Info.plist";
+				INFOPLIST_FILE = "Amyskin Unit4/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = home.unit3;
+				MARKETING_VERSION = 1.0.4;
+				PRODUCT_BUNDLE_IDENTIFIER = home.unit4;
 				PRODUCT_NAME = Amyskin;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -755,13 +759,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X98JSWP28N;
-				INFOPLIST_FILE = "lessson 3/App/Info.plist";
+				INFOPLIST_FILE = "Amyskin Unit4/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = home.unit3;
+				MARKETING_VERSION = 1.0.4;
+				PRODUCT_BUNDLE_IDENTIFIER = home.unit4;
 				PRODUCT_NAME = Amyskin;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -771,7 +775,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0A668DD724929BF800F860CB /* Build configuration list for PBXProject "lessson 3" */ = {
+		0A668DD724929BF800F860CB /* Build configuration list for PBXProject "Amyskin Unit4" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A668DEE24929BF900F860CB /* Debug */,
@@ -780,7 +784,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A668DF024929BF900F860CB /* Build configuration list for PBXNativeTarget "lessson 3" */ = {
+		0A668DF024929BF900F860CB /* Build configuration list for PBXNativeTarget "Amyskin Unit4" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A668DF124929BF900F860CB /* Debug */,

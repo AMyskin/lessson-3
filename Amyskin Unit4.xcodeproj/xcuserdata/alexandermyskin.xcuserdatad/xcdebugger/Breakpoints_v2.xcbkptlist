@@ -521,8 +521,8 @@
             filePath = "lessson 3/Views/Cells/NewsCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "configure(item:dateFormatter:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -537,8 +537,8 @@
             filePath = "lessson 3/Controllers/NewsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -601,8 +601,8 @@
             filePath = "lessson 3/Views/Cells/NewsCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "configure(item:dateFormatter:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -617,8 +617,8 @@
             filePath = "lessson 3/Views/Cells/NewsCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "getStringOfCount(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -969,8 +969,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
+            startingLineNumber = "443"
+            endingLineNumber = "443"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -985,8 +985,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1001,8 +1001,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "434"
-            endingLineNumber = "434"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1033,8 +1033,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "433"
-            endingLineNumber = "433"
+            startingLineNumber = "439"
+            endingLineNumber = "439"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1049,8 +1049,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1145,8 +1145,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "convertWall(response:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1289,8 +1289,8 @@
             filePath = "lessson 3/Network/ServiceNetwork.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "593"
-            endingLineNumber = "593"
+            startingLineNumber = "602"
+            endingLineNumber = "602"
             landmarkName = "saveGroupsToRealm(_:)"
             landmarkType = "7">
          </BreakpointContent>

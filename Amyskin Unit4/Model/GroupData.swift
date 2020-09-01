@@ -31,7 +31,7 @@ class GroupData: Object, Decodable {
 
 final class FirebaseGroup  {
     let  id: Int
-    let  userId: Int
+    let  userId: Int // Для варианта если группы хранить в отдельной от пользователей ветке
     let  name: String
     let  imageUrl: String
     
