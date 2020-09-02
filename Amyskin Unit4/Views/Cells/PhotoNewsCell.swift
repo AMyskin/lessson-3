@@ -44,4 +44,13 @@ final class PhotoNewsCell: UITableViewCell {
         authorImageView?.makeCircle()
     }
     
+    func configure(item: NewsOfUser, dateFormatter: DateFormatter) {
+        
+        authorNameLabel.text = item.author
+        publishedDateLabel.text = dateFormatter.string(from: item.date)
+        imageURL = item.imageUrl?[0]
+        avatarURL = item.avatarUrl
+
+    }
+    
 }

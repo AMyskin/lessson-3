@@ -82,9 +82,9 @@ final class NewsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let postNews = news[indexPath.row]
-        if postNews.type == .photo {
-            print("photo")
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! NewsCell
+        if postNews.type == .wallPhoto {
+            //print("wall_photo")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as! PhotoNewsCell
             cell.configure(item: news[indexPath.row], dateFormatter: dateFormatter)
             
             return cell

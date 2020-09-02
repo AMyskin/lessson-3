@@ -16,37 +16,30 @@ enum PostSourceType: String, Codable {
 enum PostTypeEnum: String, Codable {
     case post = "post"
     case photo = "photo"
+    case wallPhoto = "wall_photo"
 }
 
 // MARK: - NewsFeedElement
 struct NewsFeedElement: Codable {
     let sourceID, date: Int
-    //let canDoubtCategory, canSetCategory: Bool
-    let type, postType: PostTypeEnum
-    let text: String
-    let markedAsAds: Int?
+    let type: PostTypeEnum
+    let text: String?
     let attachments: [Attachment]?
-   // let postSource: PostSource?
-    let comments: Comments
-    let likes: Likes
-    let reposts: Reposts
-    let views: Views
-    //let isFavorite: Bool?
+    let photos: PhotosNews?
+    let comments: Comments?
+    let likes: Likes?
+    let reposts: Reposts?
+    let views: Views?
     let postID: Int
 
     enum CodingKeys: String, CodingKey {
         case sourceID = "source_id"
         case date
-        //case canDoubtCategory = "can_doubt_category"
-        //case canSetCategory = "can_set_category"
         case type
-        case postType = "post_type"
         case text
-        case markedAsAds = "marked_as_ads"
         case attachments
-       // case postSource = "post_source"
+        case photos
         case comments, likes, reposts, views
-       // case isFavorite = "is_favorite"
         case postID = "post_id"
     }
 }
@@ -59,6 +52,23 @@ struct Attachment: Codable {
     let photo: AttachmentPhoto?
     let link: Link?
     let audio: Audio?
+}
+
+// Mark: - PhotosNews
+struct PhotosNews: Codable {
+    let count: Int
+    let arrayPhoto: [PhotosItems]
+    enum CodingKeys: String, CodingKey {
+          case count
+          case arrayPhoto = "items"
+      }
+}
+struct PhotosItems: Codable {
+    let sizes: [ArrayPhoto]
+}
+
+struct ArrayPhoto: Codable {
+    let url: String?
 }
 
 // MARK: - Audio
@@ -103,7 +113,7 @@ struct Doc: Codable {
     let ext: String
     let date, type: Int
     let url: String
-    let preview: Preview
+    let preview: Preview?
     //let accessKey: String
 
     enum CodingKeys: String, CodingKey {

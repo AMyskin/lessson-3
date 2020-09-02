@@ -199,7 +199,7 @@ class ServiceNetwork {
         let queryArray: [URLQueryItem] = [
             URLQueryItem(name: "v", value: "5.120"),
             URLQueryItem(name: "count", value: "10"),
-            URLQueryItem(name: "filters", value: "post,photo"),
+            URLQueryItem(name: "filters", value: "post,photo,wall_photo"),
             URLQueryItem(name: "start_from", value: nextFromVKNews),
             URLQueryItem(name: "access_token", value: session.token)
         ]
@@ -251,13 +251,13 @@ class ServiceNetwork {
                     avatarUrl = avatar
                 }
             }
-            let newsType = news.postType
+            let newsType = news.type
             let newsDate = Date(timeIntervalSince1970: TimeInterval(news.date))
             let newsText = news.text
-            let countOfViews = news.views.count
-            let likesCount = news.likes.count
-            let countOfReposts = news.reposts.count
-            let countOfComents = news.comments.count
+            let countOfViews = news.views?.count ?? 0
+            let likesCount = news.likes?.count ?? 0
+            let countOfReposts = news.reposts?.count ?? 0
+            let countOfComents = news.comments?.count ?? 0
             if let newsAttach = news.attachments {
                 
                 newsAttach.forEach{(attachment) in
@@ -276,7 +276,7 @@ class ServiceNetwork {
                         
                     }
                     if attachment.type == AttachmentEnum.doc.rawValue{
-                        guard let doc = attachment.doc?.preview.photo.sizes else {return}
+                        guard let doc = attachment.doc?.preview?.photo.sizes else {return}
                         let index = doc.count - 1
                         
                         attachmentFotoSizeDicUrl = doc[index].src ?? ""
@@ -297,7 +297,36 @@ class ServiceNetwork {
                                                     imageUrl: [attachmentFotoSizeDicUrl],
                                                     attachments: nil,
                                                     date: newsDate,
-                                                    newsTest: newsText,
+                                                    newsTest: newsText ?? "",
+                                                    countOfViews: countOfViews,
+                                                    countOfLike: likesCount,
+                                                    countOfReposts: countOfReposts,
+                                                    countOfComents: countOfComents,
+                                                    isLiked: true)
+                
+                tmpNews.append(tmpNew)
+            }
+            
+            
+            
+            //
+            
+            if let newsPhotos = news.photos {
+                
+                newsPhotos.arrayPhoto.forEach{(attachment) in
+                    let index = attachment.sizes.count - 1
+       
+                    attachmentFotoSizeDicUrl = attachment.sizes[index].url ?? ""
+                    }
+                
+                
+                let tmpNew: NewsOfUser = NewsOfUser(type: newsType,
+                                                    author: author,
+                                                    avatarUrl: avatarUrl,
+                                                    imageUrl: [attachmentFotoSizeDicUrl],
+                                                    attachments: nil,
+                                                    date: newsDate,
+                                                    newsTest: newsText ?? "",
                                                     countOfViews: countOfViews,
                                                     countOfLike: likesCount,
                                                     countOfReposts: countOfReposts,

@@ -164,5 +164,117 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D4C108C5-ECF7-4154-B80B-A18645B2D241"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Amyskin Unit4/Network/ServiceNetwork.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "getUserNewsFeed(newQuery:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7246E1C4-5020-4B7D-AE2A-0DB9F5D81696"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Amyskin Unit4/Controllers/NewsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "79AC17AE-BF46-4E81-90B7-573BDFF09F5B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Amyskin Unit4/Controllers/NewsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "getUserFeed()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F7D2EDC-6885-4576-A7CF-1590C9115741"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Amyskin Unit4/Network/ServiceNetwork.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
+            landmarkName = "convertNew(response:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7F7D2EDC-6885-4576-A7CF-1590C9115741 - 4b871a7291e437fd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Amyskin.ServiceNetwork.convertNew(response: Amyskin.VKResponse&lt;Amyskin.NewsFeedElement&gt;) -&gt; Swift.Array&lt;Amyskin.NewsOfUser&gt;"
+                  moduleName = "Amyskin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexandermyskin/Desktop/SwiftLessons/geekbrains/unit3/lessson%203/Amyskin%20Unit4/Network/ServiceNetwork.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "238"
+                  endingLineNumber = "238"
+                  offsetFromSymbolStart = "713">
+               </Location>
+               <Location
+                  uuid = "7F7D2EDC-6885-4576-A7CF-1590C9115741 - a673cbe7fce1601"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Amyskin.NewsFeedElement) -&gt; () in Amyskin.ServiceNetwork.convertNew(response: Amyskin.VKResponse&lt;Amyskin.NewsFeedElement&gt;) -&gt; Swift.Array&lt;Amyskin.NewsOfUser&gt;"
+                  moduleName = "Amyskin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexandermyskin/Desktop/SwiftLessons/geekbrains/unit3/lessson%203/Amyskin%20Unit4/Network/ServiceNetwork.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "239"
+                  endingLineNumber = "239"
+                  offsetFromSymbolStart = "1222">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "88C3F65A-015D-4BD8-95B2-524300646D5E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Amyskin Unit4/Controllers/NewsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
